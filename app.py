@@ -20,6 +20,14 @@ reddit = praw.Reddit(
     redirect_uri=redirect_uri
 )
 
+def search_saved(reddit):
+    saved_output = {}
+
+    for item in reddit.user.me().saved(limit=10):
+        if not item.over_18:
+            saved_output[item.title] = item.url
+    return saved_output
+
 
 @app.route('/')
 def home():
