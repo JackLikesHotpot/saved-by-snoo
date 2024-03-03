@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-import reddit
+import process
 import praw
 import os
 from dotenv import load_dotenv
@@ -8,31 +8,28 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = 'heeeeeeeesdsd2'
 
-client_id = os.getenv('CLIENT_ID')
-client_secret = os.getenv('CLIENT_SECRET')
-redirect_uri = os.getenv('REDIRECT_URI')
-user_agent = os.getenv('USER_AGENT')
 
-reddit = praw.Reddit(
-    client_id=client_id,
-    client_secret=client_secret,
-    user_agent=user_agent,
-    redirect_uri=redirect_uri
-)
+def initialize():
+    client_id = os.getenv('CLIENT_ID')
+    client_secret = os.getenv('CLIENT_SECRET')
+    redirect_uri = os.getenv('REDIRECT_URI')
+    user_agent = os.getenv('USER_AGENT')
 
-def search_saved(reddit):
-    saved_output = {}
+    return praw.Reddit(
+        client_id=client_id,
+        client_secret=client_secret,
+        user_agent=user_agent,
+        redirect_uri=redirect_uri
+    )
 
-    for item in reddit.user.me().saved(limit=10):
-        if not item.over_18:
-            saved_output[item.title] = item.url
-    return saved_output
+
+reddit = initialize()
 
 
 @app.route('/')
 def home():
     # Generate OAuth2 URL for authentication
-    auth_url = reddit.auth.url(['identity', 'read'], state='...', duration='permanent')
+    auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
     return render_template('index.html', auth_url=auth_url)
 
 
@@ -53,7 +50,16 @@ def profile():
 
     # Use the access token to make authenticated requests
     user = reddit.user.me()
-    return f"Logged in as: {user.name}"
+
+    return render_template('form.html', user=user)
+
+
+@app.route('/submission', methods=['GET', 'POST'])
+def submission():
+    if request.method == 'POST':
+        print(request.form)
+        saved_output = process.search_saved(reddit=reddit, preferences=request.form)
+    return render_template('output.html', output=saved_output)
 
 
 if __name__ == '__main__':
