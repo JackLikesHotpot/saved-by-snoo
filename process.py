@@ -7,7 +7,7 @@ def search_saved(reddit, preferences):
             if 'nsfw' not in preferences:  # if you don't pick nsfw
                 # not working i think
                 if not item.over_18:
-                    saved_output[item.title] = item.url
+                    saved_output[item.title] = [item.url, item.subreddit.display_name]
     return saved_output
 
 

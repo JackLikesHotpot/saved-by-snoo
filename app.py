@@ -57,7 +57,7 @@ def profile():
 @app.route('/submission', methods=['GET', 'POST'])
 def submission():
     if request.method == 'POST':
-        print(request.form)
+        # print(request.form)
         saved_output = process.search_saved(reddit=reddit, preferences=request.form)
     return render_template('output.html', output=saved_output)
 

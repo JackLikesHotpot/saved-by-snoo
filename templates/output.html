@@ -1,13 +1,28 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/output.css') }}">
+
+
 <html>
 <body>
 
 <h1>Output</h1>
 
-<ul>
-    {% for name, link in output.items() %}
-        <li>{{ name }} - {{ link }}</li>
-    {% endfor %}
-</ul>
-
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Image Preview</th>
+            <th scope="col">Subreddit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% for name, link in output.items() %}
+        <th class="title" scope="row" width="500">{{name}}</th>
+        <td class="image" width="500"><a href={{link[0]}} target="_blank"><img class="preview" src={{link[0]}}></a></td>
+        <td class="subreddit" scope="row"><a href="https://reddit.com/r/{{link[1]}}" target="_blank">/r/{{link[1]}}</a></td>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>
