@@ -5,26 +5,17 @@
 <body>
 
 <h1>Output</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th id="heading__title" scope="col">Title</th>
-            <th id="heading__preview" scope="col">Image Preview</th>
-            <th id="heading__subreddit" scope="col">Subreddit</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
+ <div class="card-container">
         {% for name, link in output.items() %}
-        <th class="title" scope="row" width="500">{{loop.index}} - {{name}}</th>
-        <td class="image" width="500"><a href={{link[0]}} target="_blank">
-            <img class="preview" src={{link[0]}}>
-        </a></td>
-        <td class="subreddit" scope="row"><a href="https://reddit.com/r/{{link[1]}}" target="_blank">/r/{{link[1]}}</a></td>
-    </tr>
+            <div class="card">
+                <img class="image" src={{link[0]}} target="_blank"/>
+                <div class="card-text">
+                    <p>{{ name }}</p>
+                </div>
+            </div>
         {% endfor %}
-    </tbody>
-</table>
+    </div>
+
+
 </body>
 </html>

@@ -4,6 +4,10 @@ import praw
 import os
 from dotenv import load_dotenv
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = 'heeeeeeeesdsd2'
@@ -57,7 +61,6 @@ def profile():
 @app.route('/submission', methods=['GET', 'POST'])
 def submission():
     if request.method == 'POST':
-        # print(request.form)
         saved_output = process.search_saved(reddit=reddit, preferences=request.form)
     return render_template('output.html', output=saved_output)
 
