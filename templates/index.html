@@ -1,10 +1,47 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+
+
 <html>
 <head>
-    <title>Reddit OAuth2 Example</title>
+    <title>Reddit Saved Exporter</title>
 </head>
 <body>
-    <h1>Welcome to Reddit OAuth2 Example</h1>
-    <p>To get started, please log in with your Reddit account:</p>
-    <a href="{{ auth_url }}">Log in with Reddit</a>
+    <div class="landing-page">
+
+    <header class="page-header">
+    <div class="title">
+        <h1>Reddit Saved Exporter</h1>
+    </div>  
+    <div class="sub-title">
+        <p>Manage your saved Reddit images from here!</p>
+    </div>
+    </header>
+
+    <main class="flex-container">
+        <div class="features-tab">
+            <h2>Features</h2>
+            <ul id="left-tab">
+                <li>Lets you view up to 1000 of your saved Reddit images!</li>
+                <li>It uses OAuth2!</li>
+                <li>I made this with Flask!</li>
+                <li>Adding more features to filter!</li>
+            </ul>
+        </div>
+        <div class="login-tab">
+            <a href="{{ auth_url }}"><button id="login-button">Log in with Reddit</button></a>
+            <p class="button-disclaimer">Authenticate with Reddit here</p>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <div class=""></div>
+        <ul class="footer">
+            <li>Home</li>
+            <li>About</li>
+            <li>Export</li>
+            <li>Contact</li>
+        </ul>
+    </footer>
+</div>
 </body>
 </html>

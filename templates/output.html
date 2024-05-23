@@ -1,6 +1,5 @@
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/output.css') }}">
 
-
 <html>
 <body>
 
@@ -8,10 +7,7 @@
  <div class="card-container">
         {% for name, link in output.items() %}
             <div class="card">
-                <img class="image" src={{link[0]}} target="_blank"/>
-                <div class="card-text">
-                    <p>{{ name }}</p>
-                </div>
+                <a href={{link[0]}} target="_blank"><img class="image" src={{link[0]}} target="_blank"/></a>
             </div>
         {% endfor %}
     </div>

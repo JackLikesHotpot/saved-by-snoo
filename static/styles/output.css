@@ -5,31 +5,17 @@
   .card {
     height: 400px;
     width: 400px;
-    border: 3px solid black;
-    margin: 15px;
+    margin: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
     .image {
-        max-width: 90%;
-        max-height: 90%; 
+        max-width: 95%;
+        max-height: 95%; 
         display: block;
         margin: auto;
         top: 10px;
         position: relative;
+        border-radius: 20px;
     }
-
-    
-  .card-text {
-    p {
-      text-align: center;
-    }
-  }
-
   }
 }
-
-/* div.card {
-  height: 400px;
-  width: 400px;
-  border: 3px solid black;
-  margin: 15px;
-} */
