@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, jsonify, render_template, request, redirect, session
 import process
 import praw
 import os
@@ -58,7 +58,7 @@ def profile():
 def submission():
     if request.method == 'POST':
         saved_output = process.search_saved(reddit=reddit, preferences=request.form)
-    return render_template('output.html', output=saved_output)
+        return jsonify(saved_output)
 
 
 if __name__ == '__main__':
