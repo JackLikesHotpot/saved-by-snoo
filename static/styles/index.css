@@ -1,6 +1,7 @@
 .landing-page {
   max-width: 1100px;
   margin: auto;
+  margin-top: 30px;
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -25,17 +26,16 @@
 
 .features-tab, .login-tab {
   float: left;
-  width: 50%;
   justify-content: center;
   padding-top: 20px;
 }
 
 .features-tab {
-  flex-grow: 1;
+  width: 60%;
 }
 
 .login-tab {
-  flex-grow: 2;
+  width: 40%;
 }
 
 #login-button {
@@ -59,7 +59,7 @@
 }
 
 .page-footer {
-  /* border-top: 5px solid black; */
+  border-top: 3px solid black;
   margin-top: 200px;
 }
 
@@ -71,8 +71,13 @@
   list-style: none;
   display: inline-block;
   padding: 10px 0 0 150px;
+  text-align: center;
 }
 
-.footer li:after {
-  content: '|';
+.footer li a {
+  text-decoration: none;
+  color: black;
+}
+.footer li a:hover {
+  color: rgb(124, 122, 122);
 }
