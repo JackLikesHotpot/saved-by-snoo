@@ -3,11 +3,12 @@ import process
 import praw
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = 'heeeeeeeesdsd2'
-
+CORS(app)
 
 def initialize():
     client_id = os.getenv('CLIENT_ID')
@@ -32,6 +33,10 @@ def home():
     auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
     return render_template('index.html', auth_url=auth_url)
 
+@app.route('/api/auth_url', methods=['GET'])
+def get_auth_url():
+    auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
+    return jsonify({'auth_url': auth_url})
 
 @app.route('/auth_callback')
 def auth_callback():
@@ -63,5 +68,5 @@ def submission():
 
 if __name__ == '__main__':
     app.run(debug=True)
-# pipenv shell
-# flask run --debug
+    
+# pipenv run flask run --debug
