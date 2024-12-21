@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, session
+from flask import Flask, jsonify, render_template, request, redirect, session, make_response
 import process
 import praw
 import os
@@ -26,13 +26,6 @@ def initialize():
 
 reddit = initialize()
 
-
-@app.route('/')
-def home():
-    # Generate OAuth2 URL for authentication
-    auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
-    return render_template('index.html', auth_url=auth_url)
-
 @app.route('/api/auth_url', methods=['GET'])
 def get_auth_url():
     auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
@@ -41,10 +34,13 @@ def get_auth_url():
 @app.route('/auth_callback')
 def auth_callback():
     code = request.args.get('code')
-    access_token = reddit.auth.authorize(code)
-    # Store access token securely
-    session['access_token'] = access_token
-    return redirect('/profile')
+    try:
+        session['access_token'] = reddit.auth.authorize(code)
+        username = reddit.user.me().name
+        return redirect(f'http://localhost:3000/form?username={username}')
+    except Exception as e:
+        print(f'Error: {e}')
+        return redirect(f'http://localhost:3000/error')
 
 
 @app.route('/profile')
@@ -53,19 +49,32 @@ def profile():
     if not access_token:
         return redirect('/')
 
-    # Use the access token to make authenticated requests
-    user = reddit.user.me()
+    nsfw = request.args.get('nsfw')
+    username = request.args.get('username')
+    data = process.search_saved(reddit=reddit, preferences=[])
+    return jsonify(data)
 
-    return render_template('form.html', user=user)
+# add page processing under here, rename too
 
 
-@app.route('/submission', methods=['GET', 'POST'])
+
+@app.route('/api/submission', methods=['POST', 'GET'])
 def submission():
-    if request.method == 'POST':
-        saved_output = process.search_saved(reddit=reddit, preferences=request.form)
-        return jsonify(saved_output)
+    username = request.form.get('username')
+    nsfw = request.form.get('nsfw', 'off')  
 
+    print(f'Username: {username}')
+    print(f'Include NSFW content: {nsfw}')
+    
+    response = {
+        'status': 'success',
+        'username': username,
+        'nsfw': nsfw
+    }
+    
+    return jsonify(response)
 
+# need to work out if this is still being run or if not needed
 if __name__ == '__main__':
     app.run(debug=True)
     

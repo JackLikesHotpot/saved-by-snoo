@@ -1,12 +1,9 @@
-"use client"
-
 import React, { useState, useEffect } from 'react';
 // import './styles/index.css'; // Assuming the CSS is in the 'src/styles' directory
-import { useRouter } from 'next/navigation';
 import axios from 'axios'
+import Link from 'next/link';
 
-export default function Page() {
-  const router = useRouter()
+export default function Home() {
   const [authUrl, setAuthUrl] = useState('');
 
   useEffect(() => {
@@ -14,7 +11,6 @@ export default function Page() {
       
       try {
         const response = await axios.get('http://localhost:5000/api/auth_url'); // This fetches from your Flask API
-        console.log(response)
         setAuthUrl(response.data.auth_url); // Set the auth URL in the state
       } catch (error) {
         console.error('Error fetching auth URL:', error);
@@ -24,15 +20,6 @@ export default function Page() {
 
     fetchAuthUrl();
   }, []);
-  
-
-  const handleLogin = () => {
-    if (authUrl) {
-      window.location.href = authUrl; // Redirect to Reddit OAuth2 login
-    } else {
-      console.error('Authentication URL is not available');
-    }
-  };
 
   return (
     <>
@@ -49,9 +36,9 @@ export default function Page() {
             </ul>
           </div>
           <div className="login-tab">
-            <a>
-              <button id="login-button" onClick={handleLogin}>Log in with Reddit</button>
-            </a>
+            <Link href={authUrl}>
+              Login with Reddit
+            </Link>
             <p className="button-disclaimer">Authenticate with Reddit here</p>
           </div>
         </div>
