@@ -9,10 +9,10 @@ def search_saved(reddit, preferences):
                 continue
             else:
                 if item.url.endswith('png') or item.url.endswith('jpeg') or item.url.endswith('jpg'):
-                    saved_output[item.title] = {
+                    saved_output[index] = {
+                        "title": item.title,
                         "url": item.url, 
-                        "subreddit": item.subreddit.display_name,
-                        "index": index}
+                        "subreddit": item.subreddit.display_name}
                     
         index += 1
 
