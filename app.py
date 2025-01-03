@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, render_template, request, redirect, session, make_response
+from flask import Flask, jsonify, request, redirect, session
+from flask_session import Session
 import process
 import praw
 import os
@@ -7,8 +8,12 @@ from flask_cors import CORS
 
 load_dotenv()
 app = Flask(__name__)
-app.secret_key = 'heeeeeeeesdsd2'
-CORS(app)
+
+app.config['SESSION_TYPE'] = 'filesystem' 
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+CORS(app, supports_credentials=True, origins="http://localhost:3000")
+Session(app)
 
 def initialize():
     client_id = os.getenv('CLIENT_ID')
@@ -31,32 +36,33 @@ def get_auth_url():
     auth_url = reddit.auth.url(['identity', 'read', 'history'], state='...', duration='permanent')
     return jsonify({'auth_url': auth_url})
 
-@app.route('/auth_callback')
+# needed as auth_callback is being called by reddit key
+
+@app.route('/auth_callback', methods=['GET'])
 def auth_callback():
     code = request.args.get('code')
-    try:
-        session['access_token'] = reddit.auth.authorize(code)
-        username = reddit.user.me().name
-        return redirect(f'http://localhost:3000/form?username={username}')
-    except Exception as e:
-        print(f'Error: {e}')
-        return redirect(f'http://localhost:3000/error')
+    reddit_code = reddit.auth.authorize(code)
+    session['access_token'] = reddit_code
+    username = reddit.user.me().name
+    return redirect(f'http://localhost:3000/form?username={username}')
 
+@app.route('/saved', methods=['GET'])
+def saved():
+    
+    # access token just not working for some reason
+    # access_token = session.get('access_token')
+    # print(f"Access token retrieved: {access_token}")
+    # if not access_token:
+    #     return jsonify({'error': 'Unauthorized', 'redirect': '/'}, 401)
 
-@app.route('/profile')
-def profile():
-    access_token = session.get('access_token')
-    if not access_token:
-        return redirect('/')
-
-    nsfw = request.args.get('nsfw')
-    username = request.args.get('username')
-    data = process.search_saved(reddit=reddit, preferences=[])
+    nsfw = request.args.get('nsfw', default='false')
+    preferences = []
+    if nsfw.lower() == 'true':
+        preferences.append('nsfw')
+    data = process.search_saved(reddit=reddit, preferences=preferences)
     return jsonify(data)
 
 # add page processing under here, rename too
-
-
 
 @app.route('/api/submission', methods=['POST', 'GET'])
 def submission():

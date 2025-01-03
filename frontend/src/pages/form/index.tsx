@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
+import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 
 const Form: React.FC = () => {
   const [nsfw, setNsfw] = useState<boolean>(false);
@@ -14,37 +15,34 @@ const Form: React.FC = () => {
   // Handle form submission with AJAX (fetch)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the default form submission (which would reload the page)
-    let nsfw_con = false
-    if (nsfw) {
-      nsfw_con = true
-    }
-
-    router.push(`http://127.0.0.1:5000/profile?nsfw=${nsfw_con}`)
+    router.push(`http://localhost:3000/output?nsfw=${nsfw}`)
   }
+
   return (
     <div>
-      <h1>Form</h1>
+        <h1>Form</h1>
 
-      <p id="display_name">You are currently logged in as: {username}</p>
+        <p id="display_name">You are currently logged in as: {username}</p>
 
-      {/* Form for preferences */}
-      <form id="preferences" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="nsfw">Include NSFW content?</label>
-          <input
-            type="checkbox"
-            id="nsfw"
-            name="nsfw"
-            checked={nsfw}
-            onChange={handleCheckboxChange}
-          />
-        </div>
+        {/* Form for preferences */}
+        <form id="preferences" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="nsfw">Include NSFW content?</label>
+            <input
+              type="checkbox"
+              id="nsfw"
+              name="nsfw"
+              checked={nsfw}
+              onChange={handleCheckboxChange}
+            />
+          </div>
 
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
+          <div>
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    
   );
 };
 
