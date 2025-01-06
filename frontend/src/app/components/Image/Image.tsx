@@ -1,7 +1,7 @@
 // import styles from './Image.module.css'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-// import Image from 'next/image'
+import Image from 'next/image'
 
 interface ImageProps{
   url: string;
@@ -16,7 +16,7 @@ interface ImageDimensions {
 
 const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
   return new Promise((resolve, reject) => {
-    const img = new Image();
+    const img = new window.Image();
 
     img.onload = () => {
       resolve({
@@ -43,13 +43,26 @@ const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
 
 const Artist: React.FC<ImageProps> = ({ url, subreddit, title }) => {
 const [dimensions, setDimensions] = useState<ImageDimensions>();
-
+const [originalDims, setOriginalDims] = useState<ImageDimensions>();
 
   useEffect(() => {
     const fetchDimensions = async () => {
       try {
-        const { width, height }: ImageDimensions = await getImageDimensions(url); // Await the image loading
-        setDimensions({ width, height }); // Set dimensions in state
+        const { width, height }: ImageDimensions = await getImageDimensions(url); 
+        setOriginalDims({width, height})
+        let newWidth: number = 100, newHeight: number = 180
+
+        if (width >= height) {
+          const factor = width / 180;
+          newWidth = 180;
+          newHeight = Math.floor(height / factor)
+        }
+        else if (height > width) {
+          const factor = height / 180
+          newHeight = 180;
+          newWidth = Math.floor(width / factor)
+        }
+        setDimensions({width: newWidth, height: newHeight})
       } catch (error) {
         console.error("Error loading image dimensions:", error);
       }
@@ -59,16 +72,18 @@ const [dimensions, setDimensions] = useState<ImageDimensions>();
   }, [url]); // Re-run when `url` changes
 
   if (!dimensions) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   const { width, height } = dimensions;
   return (
     // <div className={styles['imageName']}>
     <div>
-      <p>Width: {width}</p>
-      <p>Height: {height}</p>
-      {/* Display or use the resized dimensions here */}
+      <Image
+        src={url}
+        width={width}
+        height={height}
+        alt='image'/>
     </div>
   );
 };

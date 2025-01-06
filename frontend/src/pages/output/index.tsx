@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 import Image from '../../app/components/Image/Image'
+import Link from 'next/link'
 
 interface Image {
   url: string;
@@ -28,20 +29,22 @@ const Output: React.FC = () => {
       }
 
     fetchData();
-    }, []);
+    }, [nsfw]);
 
   return (
     <>
     <div>
       {loading ? <LoadingScreen/> : 
       
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
         {images.map((item) => (
-          <Image
-            key={item.title}
-            url={item.url}
-            subreddit={item.subreddit}
-            title={item.title}/>
+          <Link href={item.url} target='_blank'>
+            <Image
+              key={item.title}
+              url={item.url}
+              subreddit={item.subreddit}
+              title={item.title}/>
+          </Link>
         ))} 
       </div>
       }
