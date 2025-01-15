@@ -10,5 +10,5 @@ Checklist:
 - [ ] Sort out display bugs
 - [ ] Style pages better for better UX
 - [ ] Revamp picture size calculation formula
-- [ ] Add paginations for better loading
+
 - [ ] Fix many Image errors in console

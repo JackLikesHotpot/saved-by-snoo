@@ -6,6 +6,10 @@
   @apply flex pl-3 list-none;
 }
 
+.sidebar-reset {
+  @apply text-purple-700;
+}
+
 .subreddit-name {
   @apply text-red-600 sm:w-2/3 md:w-3/4 lg:w-4/5;
 }

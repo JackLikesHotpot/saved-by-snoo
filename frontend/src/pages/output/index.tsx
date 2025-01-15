@@ -19,7 +19,8 @@ const Output: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);
   const [filteredImages, setFilteredImages] = useState<Image[]>([]);
   const [selectedSub, setSelectedSub] = useState<string | null>(null);
-  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 24;
 
   useEffect(() => {
       const fetchData = async () => {
@@ -42,39 +43,80 @@ const Output: React.FC = () => {
       if (selectedSub) {
         const filteredData = images.filter((item) => item.subreddit === selectedSub)
         setFilteredImages(filteredData)
+        setCurrentPage(1)
       }
       else {
         setFilteredImages(images)
+        setCurrentPage(1)
         }    
       }
 
     filterData();
   }, [selectedSub])
 
+
+  const lastImageIndex = itemsPerPage * currentPage;
+  const firstImageIndex = lastImageIndex - itemsPerPage 
+  const currentImages = filteredImages.slice(firstImageIndex, lastImageIndex)
+  const totalPages = Math.ceil(filteredImages.length / itemsPerPage)
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  };
+  
   return (
     <>
-    <div className="top-36 absolute">
-      {loading ? <LoadingScreen/> : 
-      <div className="flex">
-        <Sidebar
-          data={images}
-          selectedSub={setSelectedSub}
-          />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4 items-center justify-items-center w-5/6">
-          {filteredImages.map((item) => (
-            <Link href={item.url} target='_blank'>
-              <Image
-                key={item.title}
-                url={item.url}
-                subreddit={item.subreddit}
-                title={item.title}/>
-            </Link>
-          ))} 
-        </div>
+      <div>
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          <div className='top-36 relative'>
+            <div className="">
+              <div className='flex'>
+                <Sidebar data={images} selectedSub={setSelectedSub} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center justify-items-center w-5/6">
+                  {currentImages.map((item) => (
+                    <Link href={item.url} target="_blank" key={item.title}>
+                      <Image
+                        url={item.url}
+                        subreddit={item.subreddit}
+                        title={item.title}
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="pagination-controls flex justify-center gap-4 mt-4 top-36 relative">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className="p-2 bg-blue-500 text-white rounded"
+              >
+                Previous
+              </button>
+              <span>Page {currentPage} of {totalPages}</span>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="p-2 bg-blue-500 text-white rounded"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-      }
-    </div></>
-  )
+    </>
+  );
 };
 
 export default Output;

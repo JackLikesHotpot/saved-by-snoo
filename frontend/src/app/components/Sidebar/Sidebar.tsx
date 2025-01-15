@@ -1,4 +1,5 @@
 import styles from './Sidebar.module.css'
+
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -22,7 +23,7 @@ const mostPopularSubreddit = (subreddits: string[]): Record<string, number> => {
   return subCount;
 }
 
-
+const username = ''
 const Sidebar: React.FC<SidebarProps> = ({ data, selectedSub }) => {
   
 const subreddits = data.map((image) => image.subreddit)
@@ -31,6 +32,8 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
 
   return (
     <div className={styles['sidebar']}>
+      <div className={styles['current-user']}>You are currently logged in as: {username}</div>
+      <div className={styles['sidebar-reset']}><button onClick={() => selectedSub('')}>Reset Filter</button></div>
       <div className={styles['subreddit-total']}>Total number of posts: {data.length}</div>
       {sortedSubCount.map((subreddit) => (
         <div className={styles['sidebar-data']}>

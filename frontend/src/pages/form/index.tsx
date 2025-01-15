@@ -15,7 +15,7 @@ const Form: React.FC = () => {
   // Handle form submission with AJAX (fetch)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the default form submission (which would reload the page)
-    router.push(`http://localhost:3000/output?nsfw=${nsfw}`)
+    router.push(`http://localhost:3000/output?nsfw=${nsfw}&username=${username}`)
   }
 
   return (
