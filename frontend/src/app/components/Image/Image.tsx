@@ -77,7 +77,6 @@ const [originalDims, setOriginalDims] = useState<ImageDimensions>();
 
   const { width, height } = dimensions;
   return (
-    // <div className={styles['imageName']}>
     <div>
       <Image
         src={url}
