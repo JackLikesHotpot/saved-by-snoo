@@ -6,8 +6,16 @@
   @apply flex pl-3 list-none;
 }
 
+.current-user {
+  @apply flex
+}
+
 .sidebar-reset {
   @apply text-purple-700;
+}
+
+.sidebar-search {
+  @apply border border-gray-300;
 }
 
 .subreddit-name {

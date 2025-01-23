@@ -69,7 +69,7 @@ const [originalDims, setOriginalDims] = useState<ImageDimensions>();
     };
 
     fetchDimensions();
-  }, [url]); // Re-run when `url` changes
+  }, [url]); 
 
   if (!dimensions) {
     return <div></div>;

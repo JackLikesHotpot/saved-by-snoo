@@ -19,6 +19,7 @@ const Output: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);
   const [filteredImages, setFilteredImages] = useState<Image[]>([]);
   const [selectedSub, setSelectedSub] = useState<string | null>(null);
+  const [searchTitle, setSearchTitle] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 24;
 
@@ -39,21 +40,24 @@ const Output: React.FC = () => {
     }, [nsfw]);
 
   useEffect(() => {
-    const filterData = () => {
-      if (selectedSub) {
-        const filteredData = images.filter((item) => item.subreddit === selectedSub)
-        setFilteredImages(filteredData)
-        setCurrentPage(1)
-      }
-      else {
-        setFilteredImages(images)
-        setCurrentPage(1)
-        }    
+    const filterData = (subreddit: string | null, title: string) => {
+      let filteredData = images;
+
+      if (subreddit) {
+        filteredData = filteredData.filter((item) => item.subreddit === selectedSub)
       }
 
-    filterData();
-  }, [selectedSub])
+      if (title) {
+        filteredData = filteredData.filter((item) => 
+          item.title.toLowerCase().includes(title.toLowerCase()))
+      }
 
+      setFilteredImages(filteredData);
+      setCurrentPage(1)
+    }
+
+    filterData(selectedSub, searchTitle)
+  }, [selectedSub, searchTitle])
 
   const lastImageIndex = itemsPerPage * currentPage;
   const firstImageIndex = lastImageIndex - itemsPerPage 
@@ -71,6 +75,11 @@ const Output: React.FC = () => {
       setCurrentPage(currentPage - 1)
     }
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTitle = e.target.value;
+    setSearchTitle(searchTitle)
+  }
   
   return (
     <>
@@ -81,7 +90,7 @@ const Output: React.FC = () => {
           <div className='top-36 relative'>
             <div className="">
               <div className='flex'>
-                <Sidebar data={images} selectedSub={setSelectedSub} />
+                <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center justify-items-center w-5/6">
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.title}>
