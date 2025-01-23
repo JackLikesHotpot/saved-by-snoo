@@ -43,8 +43,10 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
       <input className={styles['sidebar-search']} type="text" onChange={(e) => titleChangeEvent(e)}/>
       <div className={styles['sidebar-reset']}><button onClick={() => selectedSub('')}>Reset Filter</button></div>
       <div className={styles['subreddit-total']}>Total number of posts: {data.length}</div>
+      <span className={styles['sidebar-label']}>Subreddits</span>
       {sortedSubCount.map((subreddit) => (
         <div className={styles['sidebar-data']} key={subreddit[0]}>
+          <li key={subreddit[0]}><Link href={`https://reddit.com/r/${subreddit[0]}`}>A</Link></li>
           <li key={subreddit[0]} className={styles['subreddit-name']}>
             <button onClick={() => selectedSub(subreddit[0])}> {subreddit[0]}</button></li>
           <li key={subreddit[1]} className={styles['subreddit-count']}>{subreddit[1]}</li>

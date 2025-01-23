@@ -12,3 +12,4 @@ Checklist:
 - [ ] Revamp picture size calculation formula
 
 - [ ] Fix many Image errors in console
+- [ ] consider moving some of the side information on top of the page instead

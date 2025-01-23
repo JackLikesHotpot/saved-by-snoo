@@ -21,7 +21,7 @@ const Output: React.FC = () => {
   const [selectedSub, setSelectedSub] = useState<string | null>(null);
   const [searchTitle, setSearchTitle] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 24;
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   useEffect(() => {
       const fetchData = async () => {
@@ -59,6 +59,24 @@ const Output: React.FC = () => {
     filterData(selectedSub, searchTitle)
   }, [selectedSub, searchTitle])
 
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1200) {
+        setItemsPerPage(30);  // xl size
+      } else if (width >= 1024) {
+        setItemsPerPage(24);  // lg size
+      } else if (width >= 768) {
+        setItemsPerPage(20);  // md size
+      } else {
+        setItemsPerPage(10);  // sm size (mobile)
+      }
+    };
+
+    handleResize(); // Set initial value based on current screen size
+
+  }, []);
+
   const lastImageIndex = itemsPerPage * currentPage;
   const firstImageIndex = lastImageIndex - itemsPerPage 
   const currentImages = filteredImages.slice(firstImageIndex, lastImageIndex)
@@ -91,7 +109,7 @@ const Output: React.FC = () => {
             <div className="">
               <div className='flex'>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center justify-items-center w-5/6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center justify-items-center w-5/6">
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.title}>
                       <Image
@@ -104,7 +122,7 @@ const Output: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="pagination-controls flex justify-center gap-4 mt-4 top-36 relative">
+            <div className="pagination-controls flex justify-center items-center gap-4 mt-4 top-36 relative">
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}

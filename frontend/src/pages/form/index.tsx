@@ -12,9 +12,8 @@ const Form: React.FC = () => {
     setNsfw(event.target.checked);
   };
 
-  // Handle form submission with AJAX (fetch)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission (which would reload the page)
+    event.preventDefault();
     router.push(`http://localhost:3000/output?nsfw=${nsfw}&username=${username}`)
   }
 
