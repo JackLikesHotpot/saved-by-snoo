@@ -10,6 +10,8 @@ interface Image {
   url: string;
   subreddit: string;
   title: string;
+  nsfw: boolean;
+  index: number;
 }
 
 const Output: React.FC = () => {
@@ -111,11 +113,12 @@ const Output: React.FC = () => {
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center justify-items-center w-5/6">
                   {currentImages.map((item) => (
-                    <Link href={item.url} target="_blank" key={item.title}>
+                    <Link href={item.url} target="_blank" key={item.index}>
                       <Image
                         url={item.url}
                         subreddit={item.subreddit}
                         title={item.title}
+                        nsfw={item.nsfw}
                       />
                     </Link>
                   ))}

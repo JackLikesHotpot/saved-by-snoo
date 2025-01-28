@@ -7,6 +7,7 @@ interface ImageProps{
   url: string;
   subreddit: string;
   title: string;
+  nsfw: boolean;
 }
 
 interface ImageDimensions {
@@ -41,7 +42,7 @@ const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
 // largest side divided by 180 and then divide shorter side by that
 
 
-const Artist: React.FC<ImageProps> = ({ url, subreddit, title }) => {
+const Artist: React.FC<ImageProps> = ({ url, subreddit, title, nsfw }) => {
 const [dimensions, setDimensions] = useState<ImageDimensions>();
 const [originalDims, setOriginalDims] = useState<ImageDimensions>();
 
@@ -76,9 +77,12 @@ const [originalDims, setOriginalDims] = useState<ImageDimensions>();
   }
 
   const { width, height } = dimensions;
+
+  const nsfw_blur = new URLSearchParams(window.location.search).get('blur')
   return (
     <div>
       <Image
+        className={(nsfw_blur && nsfw) ? 'filter blur-md hover:blur-none transition duration-300': ''}
         src={url}
         width={width}
         height={height}

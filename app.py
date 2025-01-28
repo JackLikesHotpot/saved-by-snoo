@@ -46,15 +46,9 @@ def auth_callback():
     username = reddit.user.me().name
     return redirect(f'http://localhost:3000/form?username={username}')
 
+
 @app.route('/saved', methods=['GET'])
 def saved():
-    
-    # access token just not working for some reason
-    # access_token = session.get('access_token')
-    # print(f"Access token retrieved: {access_token}")
-    # if not access_token:
-    #     return jsonify({'error': 'Unauthorized', 'redirect': '/'}, 401)
-
     nsfw = request.args.get('nsfw', default='false')
     preferences = []
     if nsfw.lower() == 'true':
@@ -62,25 +56,7 @@ def saved():
     data = process.search_saved(reddit=reddit, preferences=preferences)
     return jsonify(data)
 
-# add page processing under here, rename too
 
-@app.route('/api/submission', methods=['POST', 'GET'])
-def submission():
-    username = request.form.get('username')
-    nsfw = request.form.get('nsfw', 'off')  
-
-    print(f'Username: {username}')
-    print(f'Include NSFW content: {nsfw}')
-    
-    response = {
-        'status': 'success',
-        'username': username,
-        'nsfw': nsfw
-    }
-    
-    return jsonify(response)
-
-# need to work out if this is still being run or if not needed
 if __name__ == '__main__':
     app.run(debug=True)
     

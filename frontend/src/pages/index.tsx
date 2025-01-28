@@ -4,7 +4,7 @@ import axios from 'axios'
 import Link from 'next/link';
 
 export default function Home() {
-  const [authUrl, setAuthUrl] = useState('');
+  const [authUrl, setAuthUrl] = useState('https://www.reddit.com');
 
   useEffect(() => {
     const fetchAuthUrl = async () => {
@@ -39,7 +39,6 @@ export default function Home() {
             <Link href={authUrl}>
               Login with Reddit
             </Link>
-            <p className="button-disclaimer">Authenticate with Reddit here</p>
           </div>
         </div>
       </div>

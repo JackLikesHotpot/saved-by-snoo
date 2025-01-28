@@ -4,17 +4,23 @@ import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 
 const Form: React.FC = () => {
   const [nsfw, setNsfw] = useState<boolean>(false);
+  const [blurNsfw, setBlurNsfw] = useState<boolean>(false);
+  const [blurButtonVisible, setBlurButtonVisible] = useState<boolean>(false)
   const router = useRouter();
 
   const { username } = router.query;
   // Handle checkbox change
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNsfwBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNsfw(event.target.checked);
   };
+  
+  const handleBlurBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setBlurNsfw(event.target.checked);
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    router.push(`http://localhost:3000/output?nsfw=${nsfw}&username=${username}`)
+    router.push(`http://localhost:3000/output?nsfw=${nsfw}&blur=${blurNsfw}&username=${username}`)
   }
 
   return (
@@ -32,10 +38,23 @@ const Form: React.FC = () => {
               id="nsfw"
               name="nsfw"
               checked={nsfw}
-              onChange={handleCheckboxChange}
+              onChange={handleNsfwBoxChange}
+              onClick={() => setBlurButtonVisible(!blurButtonVisible)}
             />
-          </div>
+          {blurButtonVisible && (
+            <div>
+              <label htmlFor='blur-nsfw'>Blur NSFW content?</label>
+              <input
+                type='checkbox'
+                id='blur-nsfw'
+                name='blur-nsfw'
+                onChange={handleBlurBoxChange}
+              />
+            </div>
+            )
+          }
 
+          </div>
           <div>
             <input type="submit" value="Submit" />
           </div>

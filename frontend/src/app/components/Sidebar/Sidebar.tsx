@@ -37,6 +37,7 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
 
   return (
     <div className={styles['sidebar']}>
+      <div><Link href={`../form?username=${username}`}>Go Back</Link></div>
       <div className={styles['current-user']}>
         <Link href={`https://reddit.com/user/${username}`}>Currently logged in as: {username}</Link>
         <Link href={`https://reddit.com/user/${username}/saved`}>Saved</Link></div>
@@ -46,10 +47,10 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
       <span className={styles['sidebar-label']}>Subreddits</span>
       {sortedSubCount.map((subreddit) => (
         <div className={styles['sidebar-data']} key={subreddit[0]}>
-          <li key={subreddit[0]}><Link href={`https://reddit.com/r/${subreddit[0]}`}>A</Link></li>
-          <li key={subreddit[0]} className={styles['subreddit-name']}>
+          <li key={`${subreddit[0]}-link`}><Link href={`https://reddit.com/r/${subreddit[0]}`}>A</Link></li>
+          <li key={`${subreddit[0]}-name`} className={styles['subreddit-name']}>
             <button onClick={() => selectedSub(subreddit[0])}> {subreddit[0]}</button></li>
-          <li key={subreddit[1]} className={styles['subreddit-count']}>{subreddit[1]}</li>
+          <li key={`${subreddit[1]}-count`} className={styles['subreddit-count']}>{subreddit[1]}</li>
         </div>
       ))}
     </div>
