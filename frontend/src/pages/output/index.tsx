@@ -111,7 +111,7 @@ const Output: React.FC = () => {
             <div className="">
               <div className='flex'>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center justify-items-center w-5/6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-8 gap-4 items-center justify-items-center w-5/6">
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.index}>
                       <Image

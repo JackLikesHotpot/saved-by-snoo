@@ -82,7 +82,7 @@ const [originalDims, setOriginalDims] = useState<ImageDimensions>();
   return (
     <div>
       <Image
-        className={(nsfw_blur && nsfw) ? 'filter blur-md hover:blur-none transition duration-300': ''}
+        className={(nsfw_blur && nsfw) ? 'filter blur-md hover:blur-none transition duration-300': 'drop-shadow-lg'}
         src={url}
         width={width}
         height={height}

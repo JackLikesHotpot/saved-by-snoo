@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import './styles/index.css'; // Assuming the CSS is in the 'src/styles' directory
+import styles from '../styles/Index.module.css'; // Assuming the CSS is in the 'src/styles' directory
 import axios from 'axios'
 import Link from 'next/link';
 
@@ -22,26 +22,20 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <div className="landing-page">
-
-        <div className="flex-container">
-          <div className="features-tab">
-            <h2>Features</h2>
-            <ul id="left-tab">
+      <div className={styles['landing']}>
+        <div className={styles['panel']}></div>
+          <div className={styles['description']}>
+            <ul className={styles['subheading']}>
               <li>Lets you view up to 1000 of your saved Reddit images!</li>
-              <li>It uses OAuth2!</li>
-              <li>I made this with Flask!</li>
-              <li>Adding more features to filter!</li>
+              <li>You can filter your own images!</li>
+              <li>Doesn't save your own data!</li>
             </ul>
           </div>
-          <div className="login-tab">
-            <Link href={authUrl}>
+          <div className={styles['login']}>
+            <Link href={authUrl} className={styles['button']}>
               Login with Reddit
-            </Link>
-          </div>
-        </div>
+            </Link></div>
+        <div className={styles['panel']}></div>
       </div>
-    </>
   );
 };

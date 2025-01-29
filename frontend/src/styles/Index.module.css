@@ -1,0 +1,25 @@
+/* Index.module.css */
+
+.subheading {
+  @apply font-bold pl-5 list-disc;
+}
+
+.button {
+  @apply  bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-4 border border-blue-700 rounded
+}
+
+.landing {
+  @apply flex items-center h-screen
+}
+
+.description {
+  @apply w-1/2 justify-items-center
+}
+
+.login {
+  @apply w-1/2 
+}
+
+.panel {
+  @apply w-1/4 
+}
