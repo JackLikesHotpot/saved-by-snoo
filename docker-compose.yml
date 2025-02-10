@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - snoo-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - snoo-network
+    environment:
+      - FLASK_ENV=development
+
+networks:
+  snoo-network:
+    external: true

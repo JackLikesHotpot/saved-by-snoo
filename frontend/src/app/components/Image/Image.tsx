@@ -1,5 +1,5 @@
 // import styles from './Image.module.css'
-import Link from 'next/link'
+
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
@@ -42,15 +42,15 @@ const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
 // largest side divided by 180 and then divide shorter side by that
 
 
-const Artist: React.FC<ImageProps> = ({ url, subreddit, title, nsfw }) => {
+const Artist: React.FC<ImageProps> = ({ url, nsfw }) => {
 const [dimensions, setDimensions] = useState<ImageDimensions>();
-const [originalDims, setOriginalDims] = useState<ImageDimensions>();
+// const [originalDims, setOriginalDims] = useState<ImageDimensions>();
 
   useEffect(() => {
     const fetchDimensions = async () => {
       try {
         const { width, height }: ImageDimensions = await getImageDimensions(url); 
-        setOriginalDims({width, height})
+        // setOriginalDims({width, height})
         let newWidth: number = 100, newHeight: number = 180
 
         if (width >= height) {

@@ -19,6 +19,8 @@ export default function Home() {
       try {
         const response = await axios.get('http://localhost:5000/api/auth_url'); // This fetches from your Flask API
         setAuthUrl(response.data.auth_url); // Set the auth URL in the state
+        console.log('Fetched authUrl:', response.data.auth_url); // Add this line to check
+
       } catch (error) {
         console.error('Error fetching auth URL:', error);
       }
@@ -39,7 +41,7 @@ export default function Home() {
               <ul className={styles['subheading']}>
                 <li>View up to 1000 of your saved Reddit images!</li>
                 <li>You can filter by subreddit!</li>
-                <li>Doesn't save your own credentials!</li>
+                <li>Doesn&apos;t save your own credentials!</li>
               </ul>
             <div className={styles['login']}>
               <Link href={authUrl} className={styles['button']}>

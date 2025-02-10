@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request, redirect, session
-from flask_session import Session
 import process
 import praw
 import os
@@ -13,7 +12,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 CORS(app, supports_credentials=True, origins="http://localhost:3000")
-Session(app)
 
 def initialize():
     client_id = os.getenv('CLIENT_ID')
