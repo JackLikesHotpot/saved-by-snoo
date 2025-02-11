@@ -23,8 +23,6 @@ const Form: React.FC = () => {
 
   return (
     <div>
-        <h1>Form</h1>
-
         <p id="display_name">You are currently logged in as: {username}</p>
 
         {/* Form for preferences */}
