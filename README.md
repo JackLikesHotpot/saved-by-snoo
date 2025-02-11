@@ -1,34 +1,84 @@
-# export-reddit-saved
+# Saved by Snoo
 
-A web app project which allows you to login with your Reddit credentials and return all images saved on your account.
-Built using basic HTML and CSS, with Python serving as the backend via Flask.
+A web application to view and filter up to 1000 of your saved Reddit images. You can also filter the images by subreddit.
 
-# How to start:
+## Features:
+- View your saved Reddit images.
+- Filter saved images by subreddit.
+- Secure login with Reddit OAuth.
+- Doesn't store any of your own credentials.
 
-Navigate to the root directory (`/export-reddit-saved`) of this project and enter in a terminal:
+
+## Project Structure:
+- **Backend**: A Flask API that handles authentication with Reddit and serves image data via JSON.
+- **Frontend**: A Next.js React app that communicates with the backend to display saved images.
+- **Docker Compose**: One `docker-compose.yml` file to run both the frontend and backend containers.
+
+## Prerequisites:
+- Docker
+- Docker Compose
+
+## Setup Instructions
+
+### 1. Clone the repository
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/your-username/saved-by-snoo.git
+cd saved-by-snoo
 
 ```
-flask run
+
+### 2. Build and start the application
+
+```bash
+docker-compose up --build -d
 ```
 
-Open another terminal then navigate to the frontend folder (`/export-reddit-saved/frontend`), and enter:
+### 3. Access the app
 
+Once the Docker image is up and running, you can access the frontend at `http://localhost:3000`.
+
+Make sure the backend is running on port 5000 by default at `http://localhost:5000`.
+
+## 3a. Port configuration
+
+You can change the port number by navigating to /backend/app.py and modifiying the origins URL in the CORS configuration at the top of the file.
+
+### 4. Stopping the services
+
+To stop the services, you can use the following command:
+
+```bash
+docker-compose down
 ```
+
+### 5. Local development
+
+You can also run both the frontend and backend services separately by running the Flask API and React frontend separately.
+
+# Frontend:
+
+To run the frontend (React with Next.js) locally, run:
+
+```bash
+cd frontend
+npm install
 npm run dev
 ```
 
-The web app should be working and fully functional.
+This will start the frontend on `http://localhost:3000`.
 
-Checklist:
-- [x] Login working correctly
-- [x] Basic login page
-- [x] Migrate project to use React frontend and Tailwind CSS instead of basic HTML/CSS
-- [ ] Sort out display bugs
-- [ ] Style pages better for better UX
-- [ ] Revamp picture size calculation formula
+# Backend:
 
-- [ ] Fix many Image errors in console
-- [ ] consider moving some of the side information on top of the page instead
-- [ ] add logout button
-- [ ] separate tailwind code from tsx files
-- [ ] add error handling if flask server isn't active
+To run the backend (Flask) locally, run:
+
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+This will start the backend on `http://localhost:5000`.
+
+### License
