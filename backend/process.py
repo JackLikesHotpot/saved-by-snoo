@@ -17,6 +17,7 @@ def search_saved(reddit, preferences):
                             "url": item.url, 
                             "subreddit": item.subreddit.display_name,
                             "nsfw": item.over_18,
+                            "score": item.score,
                             "index": index})
             index += 1
     except Exception as e:

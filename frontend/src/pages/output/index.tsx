@@ -4,6 +4,7 @@ import axios from 'axios'
 import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 import Image from '../../app/components/Image/Image'
 import Sidebar from '../../app/components/Sidebar/Sidebar'
+import Sortbar from '../../app/components/Sortbar/Sortbar'
 import Link from 'next/link'
 
 interface Image {
@@ -104,6 +105,7 @@ const Output: React.FC = () => {
   return (
     <>
       <div>
+        <Sortbar/>
         {loading ? (
           <LoadingScreen />
         ) : (

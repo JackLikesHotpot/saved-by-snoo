@@ -1,0 +1,35 @@
+.sidebar {
+  @apply w-1/6 min-h-24
+}
+
+.sidebar-data {
+  @apply flex pl-1 list-none;
+}
+
+.current-user {
+  @apply flex flex-col;
+}
+
+.sidebar-reset {
+  @apply text-purple-700;
+}
+
+.sidebar-search {
+  @apply border border-gray-300;
+}
+
+.subreddit-total {
+  @apply pb-10;
+}
+
+.sidebar-label {
+  @apply font-bold;
+}
+
+.subreddit-name {
+  @apply text-red-600 sm:w-2/3 md:w-3/4 lg:w-4/5 pl-5;
+}
+
+.subreddit-count {
+  @apply text-blue-600 sm:w-1/3 md:w-1/4 lg:w-1/5;
+}
