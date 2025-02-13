@@ -1,0 +1,36 @@
+/* Form.module.css */
+.display-name {
+  @apply font-bold;
+}
+
+.button {
+  @apply  bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-4 border border-blue-700 rounded text-center
+}
+
+.container {
+  @apply flex justify-center items-center h-screen;
+}
+
+.form {
+  @apply flex bg-blue-200 w-1/2 items-center flex-col justify-center h-96 rounded-lg 
+}
+
+.checkbox {
+  @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+}
+
+.label {
+  @apply w-5/6
+}
+
+.box-div {
+  @apply w-1/6
+}
+
+.option {
+  @apply flex flex-row 
+}
+
+.preferences {
+  @apply w-1/2
+}

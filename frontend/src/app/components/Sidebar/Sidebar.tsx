@@ -1,7 +1,5 @@
 import styles from './Sidebar.module.css'
 import { useSearchParams } from 'next/navigation';
-
-
 import Link from 'next/link'
 
 interface ApiDataItem {

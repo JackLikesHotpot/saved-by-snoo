@@ -1,9 +1,13 @@
+import styles from './Form.module.css'
+import Link from 'next/link'
 import { useState } from 'react';
 import { useRouter } from 'next/router'
+
+
 const Form: React.FC = () => {
   const [nsfw, setNsfw] = useState<boolean>(false);
   const [blurNsfw, setBlurNsfw] = useState<boolean>(false);
-  const [blurButtonVisible, setBlurButtonVisible] = useState<boolean>(false)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const router = useRouter();
 
   const { username } = router.query;
@@ -22,39 +26,46 @@ const Form: React.FC = () => {
   }
 
   return (
-    <div>
-        <p id="display_name">You are currently logged in as: {username}</p>
+    <div className={styles['container']}>
+      <div className={styles['form']}>
+        <p className={styles['display-name']}>You are currently logged in as: <Link href={`https://reddit.com/u/${username}`} target='_blank'>{username}</Link></p>
 
-        {/* Form for preferences */}
-        <form id="preferences" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="nsfw">Include NSFW content?</label>
-            <input
-              type="checkbox"
-              id="nsfw"
-              name="nsfw"
-              checked={nsfw}
-              onChange={handleNsfwBoxChange}
-              onClick={() => setBlurButtonVisible(!blurButtonVisible)}
-            />
-          {blurButtonVisible && (
-            <div>
-              <label htmlFor='blur-nsfw'>Blur NSFW content?</label>
-              <input
-                type='checkbox'
-                id='blur-nsfw'
-                name='blur-nsfw'
-                onChange={handleBlurBoxChange}
-              />
+          <form className={styles['preferences']} onSubmit={handleSubmit}>
+            <div className={styles['options']}>
+
+              <div className={styles['option']}>
+                <div className={styles['label']}>
+                <label htmlFor="nsfw">Include NSFW content?</label></div>
+                <div className={styles['box-div']}>
+                <input
+                  className={styles['checkbox']}
+                  type="checkbox"
+                  id="nsfw"
+                  name="nsfw"
+                  checked={nsfw}
+                  onChange={handleNsfwBoxChange}
+                  onClick={() => setButtonDisabled(!buttonDisabled)}
+                /></div>
+              </div>
+              <div className={styles['option']}>
+                <div className={styles['label']}>
+                <label htmlFor='blur-nsfw'>Blur NSFW content?</label></div>
+                <div className={styles['box-div']}>
+                <input
+                  className={styles['checkbox']}
+                  type='checkbox'
+                  id='blur-nsfw'
+                  name='blur-nsfw'
+                  onChange={handleBlurBoxChange}
+                  disabled={!buttonDisabled}
+                /></div>
+              </div>
             </div>
-            )
-          }
-
-          </div>
-          <div>
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
+            <div className={styles['button']}>
+              <input type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
       </div>
     
   );
