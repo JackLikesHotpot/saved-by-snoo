@@ -6,6 +6,7 @@ import Image from '../../app/components/Image/Image'
 import Sidebar from '../../app/components/Sidebar/Sidebar'
 import Sortbar from '../../app/components/Sortbar/Sortbar'
 import Link from 'next/link'
+import { time } from 'console';
 
 interface Image {
   url: string;
@@ -25,6 +26,10 @@ const Output: React.FC = () => {
   const [searchTitle, setSearchTitle] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+
+  const [timeSort, setTimeSort] = useState(false)
+  const [resetSort, setResetSort] = useState(false)
+  const [nameSort, setNameSort] = useState(false)
 
   useEffect(() => {
       const fetchData = async () => {
@@ -80,6 +85,23 @@ const Output: React.FC = () => {
 
   }, []);
 
+  useEffect(() => {
+    const handleSort = () => {
+      if (timeSort) {
+
+      }
+      
+      if (nameSort) {
+
+      }
+
+      if (resetSort) {
+        
+      }
+    }
+
+  }, [timeSort, nameSort, resetSort])
+
   const lastImageIndex = itemsPerPage * currentPage;
   const firstImageIndex = lastImageIndex - itemsPerPage 
   const currentImages = filteredImages.slice(firstImageIndex, lastImageIndex)
@@ -105,11 +127,11 @@ const Output: React.FC = () => {
   return (
     <>
       <div>
-        <Sortbar/>
+        <Sortbar timeSort={setTimeSort} resetSort={setResetSort} nameSort={setNameSort}/>
         {loading ? (
           <LoadingScreen />
         ) : (
-          <div className='top-36 relative'>
+          <div className='relative'>
             <div className="">
               <div className='flex'>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
