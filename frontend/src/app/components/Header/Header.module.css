@@ -1,0 +1,15 @@
+.header {
+  @apply flex flex-row pt-2 pb-6
+}
+
+.back-button {
+  @apply w-1/3 flex justify-start
+}
+
+.project-name {
+  @apply w-1/3 flex justify-center text-2xl
+}
+
+.username {
+  @apply w-1/3 flex justify-end pr-10 align-middle
+}

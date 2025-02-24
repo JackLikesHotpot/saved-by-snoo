@@ -5,8 +5,9 @@ import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 import Image from '../../app/components/Image/Image'
 import Sidebar from '../../app/components/Sidebar/Sidebar'
 import Sortbar from '../../app/components/Sortbar/Sortbar'
+import Header from '../../app/components/Header/Header'
 import Link from 'next/link'
-import { time } from 'console';
+import styles from './Output.module.css'
 
 interface Image {
   url: string;
@@ -88,7 +89,7 @@ const Output: React.FC = () => {
   useEffect(() => {
     const handleSort = () => {
       if (timeSort) {
-
+        console.log(timeSort)
       }
       
       if (nameSort) {
@@ -99,6 +100,8 @@ const Output: React.FC = () => {
         
       }
     }
+
+    handleSort();
 
   }, [timeSort, nameSort, resetSort])
 
@@ -126,16 +129,21 @@ const Output: React.FC = () => {
   
   return (
     <>
-      <div>
-        <Sortbar timeSort={setTimeSort} resetSort={setResetSort} nameSort={setNameSort}/>
+      <div className='px-4'>
+        {/* <Sortbar timeSort={setTimeSort} resetSort={setResetSort} nameSort={setNameSort}/> */}
+        <Header/>
         {loading ? (
           <LoadingScreen />
         ) : (
           <div className='relative'>
             <div className="">
-              <div className='flex'>
+              <div className={styles['grid-container']}>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-8 gap-4 items-center justify-items-center w-5/6">
+                
+                <div className={styles['main']}>
+                  
+                <div className={styles['grid-title']}><span>Posts: {images.length}</span></div>
+                <div className={styles['images']}>
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.index}>
                       <Image
@@ -147,13 +155,14 @@ const Output: React.FC = () => {
                     </Link>
                   ))}
                 </div>
+                </div>
               </div>
             </div>
             <div className="pagination-controls flex justify-center items-center gap-4 mt-4 top-36 relative">
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-                className="p-2 bg-blue-500 text-white rounded"
+                className={styles['page-button']}
               >
                 Previous
               </button>
@@ -161,7 +170,7 @@ const Output: React.FC = () => {
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-                className="p-2 bg-blue-500 text-white rounded"
+                className={styles['page-button']}
               >
                 Next
               </button>

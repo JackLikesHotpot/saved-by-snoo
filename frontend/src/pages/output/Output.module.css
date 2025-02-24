@@ -1,0 +1,21 @@
+/* Output.module.css */
+
+.grid-container {
+  @apply flex w-full
+}
+
+.grid-title {
+  @apply font-bold text-xl 
+}
+
+.images {
+  @apply grid grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 items-center justify-items-center
+}
+
+.main {
+  @apply flex flex-col w-full
+}
+
+.page-button {
+  @apply p-2 bg-blue-500 text-white rounded
+}
