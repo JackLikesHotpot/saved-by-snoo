@@ -14,7 +14,7 @@ const Sortbar: React.FC = ({ }) => {
       <div className={styles['back-button']}>
       <div><Link href={`../form?username=${username}`}><Image src={arrow} alt='back' width='25'></Image></Link></div></div>
       <div className={styles['project-name']}>Saved By Snoo</div>
-      <div className={styles['username']}><Link href={`https://reddit.com/user/${username}`}>{username}</Link></div>
+      <div className={styles['username']}><Link href={`https://reddit.com/user/${username}`} target='_blank'>{username}</Link></div>
     </div>
   );
 };

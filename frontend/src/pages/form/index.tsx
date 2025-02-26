@@ -62,7 +62,7 @@ const Form: React.FC = () => {
               </div>
             </div>
             <div className={styles['button']}>
-              <input type="submit" value="Submit" />
+              <input className='w-full h-full' type="submit" value="Submit" />
             </div>
           </form>
         </div>

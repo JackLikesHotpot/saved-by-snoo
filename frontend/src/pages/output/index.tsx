@@ -15,6 +15,7 @@ interface Image {
   title: string;
   nsfw: boolean;
   index: number;
+  type: string;
 }
 
 const Output: React.FC = () => {
@@ -71,14 +72,20 @@ const Output: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width >= 1200) {
-        setItemsPerPage(30);  // xl size
-      } else if (width >= 1024) {
-        setItemsPerPage(24);  // lg size
-      } else if (width >= 768) {
-        setItemsPerPage(20);  // md size
-      } else {
-        setItemsPerPage(10);  // sm size (mobile)
+      if (width >= 1536) {
+        setItemsPerPage(32)   // 2xl size (min 1536px)
+      }
+      else if (width >= 1280) {
+        setItemsPerPage(30);  // xl size (min 1280px)
+      } 
+      else if (width >= 1024) {
+        setItemsPerPage(25);  // lg size (min 1024px)
+      } 
+      else if (width >= 768) {
+        setItemsPerPage(15);  // md size (min 768px)
+      } 
+      else {
+        setItemsPerPage(10);  // sm size (min 640px)
       }
     };
 
@@ -131,18 +138,18 @@ const Output: React.FC = () => {
     <>
       <div className='px-4'>
         {/* <Sortbar timeSort={setTimeSort} resetSort={setResetSort} nameSort={setNameSort}/> */}
-        <Header/>
         {loading ? (
           <LoadingScreen />
         ) : (
           <div className='relative'>
+            <Header/>
             <div className="">
               <div className={styles['grid-container']}>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
                 
                 <div className={styles['main']}>
                   
-                <div className={styles['grid-title']}><span>Posts: {images.length}</span></div>
+                <div className={styles['grid-title']}><span>Posts: {filteredImages.length}</span></div>
                 <div className={styles['images']}>
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.index}>

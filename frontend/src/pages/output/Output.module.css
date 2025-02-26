@@ -5,11 +5,18 @@
 }
 
 .grid-title {
-  @apply font-bold text-xl 
+  @apply font-bold text-xl pb-4 pl-8
 }
 
 .images {
-  @apply grid grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 items-center justify-items-center
+  @apply grid grow 
+  grid-cols-1 
+  sm:grid-cols-2 
+  md:grid-cols-3 
+  lg:grid-cols-5 
+  xl:grid-cols-6 
+  2xl:grid-cols-8 
+  gap-4 items-center justify-items-center
 }
 
 .main {

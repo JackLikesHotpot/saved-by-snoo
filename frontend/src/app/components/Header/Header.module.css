@@ -1,5 +1,5 @@
 .header {
-  @apply flex flex-row pt-2 pb-6
+  @apply flex flex-row py-2 font-semibold border-b-4 mb-8;
 }
 
 .back-button {
@@ -7,7 +7,7 @@
 }
 
 .project-name {
-  @apply w-1/3 flex justify-center text-2xl
+  @apply w-1/3 flex justify-center text-xl
 }
 
 .username {

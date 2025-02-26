@@ -5,6 +5,7 @@ interface ApiDataItem {
   title: string;
   url: string;
   subreddit: string;
+  type: string;
 }
 
 interface SidebarProps {
@@ -20,10 +21,9 @@ const filterSubreddit = (subreddits: string[]): Record<string, number> => {
     subCount[subreddit] = (subCount[subreddit] || 0) + 1
   }))
   return subCount;
-}
+} 
 
 const Sidebar: React.FC<SidebarProps> = ({ data, selectedSub, titleChangeEvent }) => {
-  
 
 const subreddits = data.map((image) => image.subreddit)
 const subCount = filterSubreddit(subreddits)
@@ -38,12 +38,14 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
       <span className={styles['sidebar-label']}>Subreddits</span>
       {sortedSubCount.map((subreddit) => (
         <div className={styles['sidebar-data']} key={subreddit[0]}>
-          <li key={`${subreddit[0]}-link`}><Link href={`https://reddit.com/r/${subreddit[0]}`}>A</Link></li>
+          <li key={`${subreddit[0]}-link`} className={styles['subreddit-link']}><Link href={`https://reddit.com/r/${subreddit[0]}`}>+</Link></li>
           <li key={`${subreddit[0]}-name`} className={styles['subreddit-name']}>
             <button onClick={() => selectedSub(subreddit[0])}> {subreddit[0]}</button></li>
-          <li key={`${subreddit[1]}-count`} className={styles['subreddit-count']}>{subreddit[1]}</li>
         </div>
       ))}
+      </div>
+      <div className={styles['filter-bar']}><span className={styles['filter-text']}>Filter</span>
+
       </div>
     </div>
   );
