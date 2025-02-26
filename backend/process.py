@@ -10,7 +10,7 @@ def get_saved_image(item, index):
     "score": item.score,
     "date": item.created_utc,
     "index": index,
-    "type": "image"
+    "type": "Image"
 }
 
 def get_saved_gallery(item, index):
@@ -24,7 +24,7 @@ def get_saved_gallery(item, index):
         "score": item.score,
         "date": item.created_utc,
         "index": index,
-        "type": "gallery"
+        "type": "Gallery"
     }
 
 def get_saved_video(item, index):
@@ -37,7 +37,7 @@ def get_saved_video(item, index):
         "score": item.score,
         "date": item.created_utc,
         "index": index,
-        "type": "video"
+        "type": "Video"
     }
 
 def search_saved(reddit, preferences):

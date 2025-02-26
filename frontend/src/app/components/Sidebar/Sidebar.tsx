@@ -28,6 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ data, selectedSub, titleChangeEvent }
 const subreddits = data.map((image) => image.subreddit)
 const subCount = filterSubreddit(subreddits)
 const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) => countB - countA);
+const types = [...new Set(data.map((image) => image.type))];
 
   return (
     <div className={styles['sidebar']}>
@@ -45,7 +46,12 @@ const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) =>
       ))}
       </div>
       <div className={styles['filter-bar']}><span className={styles['filter-text']}>Filter</span>
-
+      {types.map((filetype) => (
+        <div className={styles['sidebar-filetype']} key={`${filetype}`}>
+          <li key={`${filetype}-key`} className={styles['filetype-label']}>
+            <button>{filetype}</button></li>
+        </div>  
+      ))}
       </div>
     </div>
   );
