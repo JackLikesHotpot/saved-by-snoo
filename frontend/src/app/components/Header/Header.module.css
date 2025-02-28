@@ -1,5 +1,5 @@
 .header {
-  @apply flex flex-row py-2 font-semibold border-b-4 mb-8;
+  @apply flex flex-row py-2 font-semibold border-b-4 mb-8 bg-gray-200;
 }
 
 .back-button {

@@ -34,23 +34,15 @@ const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
   });
 };
 
-// make resize image for below logic
-
-
-// danbo site images always height or width 180, whichever one is larger
-// 135x180 image is actually 850x1129
-// largest side divided by 180 and then divide shorter side by that
-
 
 const Artist: React.FC<ImageProps> = ({ url, nsfw }) => {
 const [dimensions, setDimensions] = useState<ImageDimensions>();
-// const [originalDims, setOriginalDims] = useState<ImageDimensions>();
 
   useEffect(() => {
     const fetchDimensions = async () => {
       try {
         const { width, height }: ImageDimensions = await getImageDimensions(url); 
-        // setOriginalDims({width, height})
+        
         let newWidth: number = 100, newHeight: number = 180
 
         if (width >= height) {
@@ -64,9 +56,11 @@ const [dimensions, setDimensions] = useState<ImageDimensions>();
           newWidth = Math.floor(width / factor)
         }
         setDimensions({width: newWidth, height: newHeight})
+        
       } catch (error) {
         console.error("Error loading image dimensions:", error);
       }
+      
     };
 
     fetchDimensions();
@@ -82,7 +76,7 @@ const [dimensions, setDimensions] = useState<ImageDimensions>();
   return (
     <div>
       <Image
-        className={(nsfw_blur && nsfw) ? 'filter blur-md hover:blur-none transition duration-300': 'drop-shadow-lg'}
+        className={(nsfw_blur && nsfw) ? 'filter blur-md hover:blur-none transition duration-300 object-contain': 'drop-shadow-lg object-contain'}
         src={url}
         width={width}
         height={height}

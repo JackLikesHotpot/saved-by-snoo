@@ -1,5 +1,5 @@
 import praw
-import re
+import requests
 
 def get_saved_image(item, index):
     return {
@@ -40,6 +40,16 @@ def get_saved_video(item, index):
         "type": "Video"
     }
 
+# function to remove 404 images
+def validate_images(images):
+    for item in range(len(images)-1, -1, -1):
+        try:
+            response = requests.head(images[item]['url'])
+            if response.status_code == 404:
+                images.pop(item)
+        except requests.RequestException:
+            return False
+
 def search_saved(reddit, preferences):
     output = []
     index = 0
@@ -65,4 +75,5 @@ def search_saved(reddit, preferences):
             print(f'Process failed! Error encountered. {e}')
             continue
 
+    validate_images(output)
     return output

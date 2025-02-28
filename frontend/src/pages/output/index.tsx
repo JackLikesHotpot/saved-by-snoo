@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import LoadingScreen from '../../app/components/Loading/LoadingScreen';
-import Image from '../../app/components/Image/Image'
-import Sidebar from '../../app/components/Sidebar/Sidebar'
-import Header from '../../app/components/Header/Header'
+import LoadingScreen from '@/app/components/Loading/LoadingScreen';
+import Image from '@/app/components/Image/Image'
+import Sidebar from '@/app/components/Sidebar/Sidebar'
+import Header from '@/app/components/Header/Header'
+import Footer from '@/app/components/Footer/Footer';
+import Controls from '@/app/components/Controls/Controls'
 import Link from 'next/link'
 import styles from './Output.module.css'
 
@@ -43,7 +45,7 @@ const Output: React.FC = () => {
       }
 
     fetchData();
-    }, [nsfw]);
+    }, []);
 
   useEffect(() => {
     const filterData = (subreddit: string | null, title: string, type: string) => {
@@ -97,19 +99,6 @@ const Output: React.FC = () => {
   const lastImageIndex = itemsPerPage * currentPage;
   const firstImageIndex = lastImageIndex - itemsPerPage 
   const currentImages = filteredImages.slice(firstImageIndex, lastImageIndex)
-  const totalPages = Math.ceil(filteredImages.length / itemsPerPage)
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTitle = e.target.value;
@@ -118,13 +107,13 @@ const Output: React.FC = () => {
   
   return (
     <>
-      <div className='px-4'>
+      <div className=''>
         {loading ? (
           <LoadingScreen />
         ) : (
           <div className='relative'>
             <Header/>
-            <div className="">
+            <div className="px-4">
               <div className={styles['grid-container']}>
                 <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange} selectedType={setSelectedType}/>
                 
@@ -146,23 +135,13 @@ const Output: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className={styles['controls']}>
-              <button
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-                className={styles['page-button']}
-              >
-                Previous
-              </button>
-              <span>Page {currentPage} of {totalPages}</span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-                className={styles['page-button']}
-              >
-                Next
-              </button>
-            </div>
+            <Controls 
+              currentPage={currentPage} 
+              setCurrentPage={setCurrentPage} 
+              itemsPerPage={itemsPerPage} 
+              numberOfImages={filteredImages.length}
+              />
+
           </div>
         )}
       </div>
