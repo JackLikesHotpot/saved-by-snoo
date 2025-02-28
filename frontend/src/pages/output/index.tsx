@@ -4,7 +4,6 @@ import axios from 'axios'
 import LoadingScreen from '../../app/components/Loading/LoadingScreen';
 import Image from '../../app/components/Image/Image'
 import Sidebar from '../../app/components/Sidebar/Sidebar'
-import Sortbar from '../../app/components/Sortbar/Sortbar'
 import Header from '../../app/components/Header/Header'
 import Link from 'next/link'
 import styles from './Output.module.css'
@@ -25,13 +24,10 @@ const Output: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);
   const [filteredImages, setFilteredImages] = useState<Image[]>([]);
   const [selectedSub, setSelectedSub] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>('')
   const [searchTitle, setSearchTitle] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-
-  const [timeSort, setTimeSort] = useState(false)
-  const [resetSort, setResetSort] = useState(false)
-  const [nameSort, setNameSort] = useState(false)
 
   useEffect(() => {
       const fetchData = async () => {
@@ -50,7 +46,7 @@ const Output: React.FC = () => {
     }, [nsfw]);
 
   useEffect(() => {
-    const filterData = (subreddit: string | null, title: string) => {
+    const filterData = (subreddit: string | null, title: string, type: string) => {
       let filteredData = images;
 
       if (subreddit) {
@@ -62,12 +58,17 @@ const Output: React.FC = () => {
           item.title.toLowerCase().includes(title.toLowerCase()))
       }
 
+      if (type) {
+        console.log(selectedType)
+        filteredData = filteredData.filter((item) => item.type === selectedType)
+      }
+
       setFilteredImages(filteredData);
       setCurrentPage(1)
     }
 
-    filterData(selectedSub, searchTitle)
-  }, [selectedSub, searchTitle])
+    filterData(selectedSub, searchTitle, selectedType)
+  }, [selectedSub, searchTitle, selectedType])
 
   useEffect(() => {
     const handleResize = () => {
@@ -92,25 +93,6 @@ const Output: React.FC = () => {
     handleResize(); // Set initial value based on current screen size
 
   }, []);
-
-  useEffect(() => {
-    const handleSort = () => {
-      if (timeSort) {
-        console.log(timeSort)
-      }
-      
-      if (nameSort) {
-
-      }
-
-      if (resetSort) {
-        
-      }
-    }
-
-    handleSort();
-
-  }, [timeSort, nameSort, resetSort])
 
   const lastImageIndex = itemsPerPage * currentPage;
   const firstImageIndex = lastImageIndex - itemsPerPage 
@@ -137,7 +119,6 @@ const Output: React.FC = () => {
   return (
     <>
       <div className='px-4'>
-        {/* <Sortbar timeSort={setTimeSort} resetSort={setResetSort} nameSort={setNameSort}/> */}
         {loading ? (
           <LoadingScreen />
         ) : (
@@ -145,7 +126,7 @@ const Output: React.FC = () => {
             <Header/>
             <div className="">
               <div className={styles['grid-container']}>
-                <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange}/>
+                <Sidebar data={images} selectedSub={setSelectedSub} titleChangeEvent={handleInputChange} selectedType={setSelectedType}/>
                 
                 <div className={styles['main']}>
                   
@@ -165,7 +146,7 @@ const Output: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="pagination-controls flex justify-center items-center gap-4 mt-4 top-36 relative">
+            <div className={styles['controls']}>
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}

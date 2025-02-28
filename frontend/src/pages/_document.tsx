@@ -6,8 +6,8 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="description" content="Custom meta description for all pages" />
-          <link rel="icon" href="/favicon.ico" />
-          {/* Add global meta tags, fonts, or other settings */}
+          <link rel="icon" href="" />
+          <title>Saved by Snoo</title>
         </Head>
         <body>
           <Main />

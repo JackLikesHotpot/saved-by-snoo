@@ -12,6 +12,7 @@ interface SidebarProps {
   data: ApiDataItem[]
   selectedSub: (subreddit: string) => void
   titleChangeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void
+  selectedType: (type: string) => void
 }
 
 const filterSubreddit = (subreddits: string[]): Record<string, number> => {
@@ -23,18 +24,23 @@ const filterSubreddit = (subreddits: string[]): Record<string, number> => {
   return subCount;
 } 
 
-const Sidebar: React.FC<SidebarProps> = ({ data, selectedSub, titleChangeEvent }) => {
+const Sidebar: React.FC<SidebarProps> = ({ data, selectedSub, titleChangeEvent, selectedType }) => {
 
 const subreddits = data.map((image) => image.subreddit)
 const subCount = filterSubreddit(subreddits)
 const sortedSubCount = Object.entries(subCount).sort(([, countA], [, countB]) => countB - countA);
 const types = [...new Set(data.map((image) => image.type))];
 
+const resetFilter = () => {
+  selectedType('')
+  selectedSub('')
+}
+
   return (
     <div className={styles['sidebar']}>
       <div className={styles['search-bar']}><span className={styles['bar-text']}>Search</span>
       <input className={styles['sidebar-search']} type="text" onChange={(e) => titleChangeEvent(e)}/></div>
-      <div className={styles['sidebar-reset']}><button onClick={() => selectedSub('')}>Reset Filter</button></div>
+      <div className={styles['sidebar-reset']}><button onClick={() => resetFilter()}>Reset Filter</button></div>
       <div className={styles['subreddit-list']}>
       <span className={styles['sidebar-label']}>Subreddits</span>
       {sortedSubCount.map((subreddit) => (
@@ -48,8 +54,8 @@ const types = [...new Set(data.map((image) => image.type))];
       <div className={styles['filter-bar']}><span className={styles['filter-text']}>Filter</span>
       {types.map((filetype) => (
         <div className={styles['sidebar-filetype']} key={`${filetype}`}>
-          <li key={`${filetype}-key`} className={styles['filetype-label']}>
-            <button>{filetype}</button></li>
+          <li key={`${filetype}-key`} className={styles['filetype']}>
+            <button onClick={() => selectedType(filetype)}>{filetype}</button></li>
         </div>  
       ))}
       </div>

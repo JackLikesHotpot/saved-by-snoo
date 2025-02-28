@@ -35,7 +35,7 @@
   @apply border border-gray-300 w-48
 }
 
-.sidebar-label {
+.sidebar-label, .filter-text {
   @apply font-bold;
 }
 
@@ -53,4 +53,12 @@
 
 .bar-text, .filter-text {
   @apply font-bold text-lg
+}
+
+.filter-bar {
+  @apply pt-6
+}
+
+.filetype {
+  @apply flex list-none text-blue-600 pl-2;
 }

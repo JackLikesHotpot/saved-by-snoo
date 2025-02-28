@@ -26,3 +26,8 @@
 .page-button {
   @apply p-2 bg-blue-500 text-white rounded
 }
+
+
+.controls {
+  @apply flex justify-center items-center gap-4 mt-4 top-36 relative
+}
