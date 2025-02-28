@@ -107,11 +107,11 @@ const Output: React.FC = () => {
   
   return (
     <>
-      <div className=''>
+      <div>
         {loading ? (
           <LoadingScreen />
         ) : (
-          <div className='relative'>
+          <div className='relative min-h-screen'>
             <Header/>
             <div className="px-4">
               <div className={styles['grid-container']}>
@@ -141,7 +141,7 @@ const Output: React.FC = () => {
               itemsPerPage={itemsPerPage} 
               numberOfImages={filteredImages.length}
               />
-
+          <Footer/>
           </div>
         )}
       </div>

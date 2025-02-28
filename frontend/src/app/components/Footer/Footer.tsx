@@ -1,8 +1,5 @@
 import styles from './Footer.module.css'
-import { useSearchParams } from 'next/navigation';
-import Image from 'next/image'
 import Link from 'next/link'
-import arrow from '../../../../public/back-arrow.svg'
 
 const Footer: React.FC = ({ }) => {
 
