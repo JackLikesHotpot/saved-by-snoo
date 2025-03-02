@@ -2,11 +2,6 @@
 
 This web application was created using React and Next.js as frameworks, with a Flask/Python API setup on the backend and TypeScript on the frontend, styled with Tailwind CSS. This application allows Reddit users to view and filter up to 1000 of their saved posts. The app allows users to filter the posts by subreddit, title name, and the type of submission.
 
-
-![A preview image of the project can be seen here](https://i.imgur.com/432Wg72.jpeg)
-
-*Image last updated 02/03/2025.*
-
 ## Features:
 - [x] Allows users to view their save images and videos
 - [x] Allows users to filter their images/videos by types (gallery, video, image)
@@ -22,6 +17,12 @@ This web application was created using React and Next.js as frameworks, with a F
 - **Backend**: A Flask API that handles authentication with Reddit and serves image data via JSON.
 - **Frontend**: A Next.js React app that communicates with the backend to display saved images.
 - **Docker Compose**: One `docker-compose.yml` file to run both the frontend and backend containers.
+
+## Preview
+
+![A preview image of the project can be seen here](https://i.imgur.com/432Wg72.jpeg)
+
+*Image last updated 02/03/2025.*
 
 ## Prerequisites:
 - Docker
