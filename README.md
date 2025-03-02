@@ -1,6 +1,6 @@
 # Saved by Snoo
 
-A web application to view and filter up to 1000 of your saved Reddit posts. You can filter the posts by subreddit, title name, and the type of submission.
+This web application was created using React and Next.js as frameworks, with a Flask/Python API setup on the backend and TypeScript on the frontend, styled with Tailwind CSS. This application allows Reddit users to view and filter up to 1000 of their saved posts. The app allows users to filter the posts by subreddit, title name, and the type of submission.
 
 ## Features:
 - [x] Allows users to view their save images and videos
@@ -106,7 +106,7 @@ python app.py
 
 This will start the backend on `http://localhost:5000`.
 
-![A preview image of the project can be seen here]('https://i.imgur.com/432Wg72.jpeg')
+![A preview image of the project can be seen here](https://i.imgur.com/432Wg72.jpeg)
 
 *Image last updated 02/03/2025.*
 
