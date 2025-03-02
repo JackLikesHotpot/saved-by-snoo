@@ -1,14 +1,5 @@
 import styles from './Controls.module.css'
 
-interface Image {
-  url: string;
-  subreddit: string;
-  title: string;
-  nsfw: boolean;
-  index: number;
-  type: string;
-}
-
 interface Controls {
   currentPage: number,
   setCurrentPage: (page: number) => void,

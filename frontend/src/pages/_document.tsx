@@ -7,7 +7,6 @@ class MyDocument extends Document {
         <Head>
           <meta name="description" content="Custom meta description for all pages" />
           <link rel="icon" href="" />
-          <title>Saved by Snoo</title>
         </Head>
         <body>
           <Main />

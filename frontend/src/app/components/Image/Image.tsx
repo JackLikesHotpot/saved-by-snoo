@@ -35,7 +35,7 @@ const getImageDimensions = (imageUrl: string): Promise<ImageDimensions> => {
 };
 
 
-const Artist: React.FC<ImageProps> = ({ url, nsfw }) => {
+const Media: React.FC<ImageProps> = ({ url, nsfw }) => {
 const [dimensions, setDimensions] = useState<ImageDimensions>();
 
   useEffect(() => {
@@ -80,9 +80,9 @@ const [dimensions, setDimensions] = useState<ImageDimensions>();
         src={url}
         width={width}
         height={height}
-        alt='image'/>
+        alt={`Image for ${url}`}/>
     </div>
   );
 };
 
-export default Artist;
+export default Media;

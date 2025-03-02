@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import LoadingScreen from '@/app/components/Loading/LoadingScreen';
-import Image from '@/app/components/Image/Image'
+import Media from '@/app/components/Image/Image'
 import Sidebar from '@/app/components/Sidebar/Sidebar'
 import Header from '@/app/components/Header/Header'
 import Footer from '@/app/components/Footer/Footer';
 import Controls from '@/app/components/Controls/Controls'
 import Link from 'next/link'
 import styles from './Output.module.css'
+import Head from 'next/head'
 
 interface Image {
   url: string;
@@ -45,7 +46,7 @@ const Output: React.FC = () => {
       }
 
     fetchData();
-    }, []);
+    }, [nsfw]);
 
   useEffect(() => {
     const filterData = (subreddit: string | null, title: string, type: string) => {
@@ -70,7 +71,7 @@ const Output: React.FC = () => {
     }
 
     filterData(selectedSub, searchTitle, selectedType)
-  }, [selectedSub, searchTitle, selectedType])
+  }, [selectedSub, searchTitle, selectedType, images])
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,6 +109,9 @@ const Output: React.FC = () => {
   return (
     <>
       <div>
+        <Head>
+        <title>Saved by Snoo</title>
+        </Head>
         {loading ? (
           <LoadingScreen />
         ) : (
@@ -123,7 +127,7 @@ const Output: React.FC = () => {
                 <div className={styles['images']}>
                   {currentImages.map((item) => (
                     <Link href={item.url} target="_blank" key={item.index}>
-                      <Image
+                      <Media
                         url={item.url}
                         subreddit={item.subreddit}
                         title={item.title}
