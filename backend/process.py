@@ -72,7 +72,7 @@ def search_saved(reddit, preferences):
                     
             index += 1
         except Exception as e:
-            print(f'Process failed! Error encountered. {e}')
+            print(f'Process failed! Error encountered. {e} for URL: {item.url}')
             continue
 
     validate_images(output)
