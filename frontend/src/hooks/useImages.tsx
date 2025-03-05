@@ -3,10 +3,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios';
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
-
 interface Image {
   url: string;
   subreddit: string;
