@@ -6,7 +6,6 @@
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "target": "ES2016",
-    "outDir": "./dist"
   },
   "include": [
     "src/**/*.ts",
