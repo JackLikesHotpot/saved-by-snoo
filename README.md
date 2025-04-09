@@ -14,7 +14,7 @@ This web application was created using React and Next.js as frameworks, with a F
 
 
 ## Project Structure:
-- **Backend**: A Flask API that handles authentication with Reddit and serves image data via JSON.
+- **Backend**: A Node.JS API that handles authentication with Reddit and serves image data via Express.
 - **Frontend**: A Next.js React app that communicates with the backend to display saved images.
 - **Docker Compose**: One `docker-compose.yml` file to run both the frontend and backend containers.
 
@@ -28,9 +28,8 @@ This web application was created using React and Next.js as frameworks, with a F
 - Docker
 - Docker Compose
 - A Reddit API key.
-- Python 3.10+
-- Node v20.0
-- npm v10.0
+- Node v20.0+
+- npm v10.0+
 
 ## Setup Instructions
 
@@ -102,12 +101,11 @@ This will start the frontend on `http://localhost:3000`.
 
 # Backend:
 
-To run the backend (Flask) locally, run:
+To run the backend (Node) locally, run:
 
 ```bash
 cd backend
-pip install -r requirements.txt
-python app.py
+npx tsx src/app.ts
 ```
 
 This will start the backend on `http://localhost:5000`.
