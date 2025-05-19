@@ -29,6 +29,10 @@ export const authCallback = async (req: Request, res: Response): Promise<void> =
       redirectUri: process.env.REDIRECT_URI!
     });
 
+
+const refreshToken = r.refreshToken
+  
+// store refresh token in database
     await r.getMe().then(me => {
       res.redirect(`http://localhost:3000/form?username=${me.name}`);
     })
