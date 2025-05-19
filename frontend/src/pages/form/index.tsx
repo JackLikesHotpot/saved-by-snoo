@@ -11,7 +11,6 @@ const Form: React.FC = () => {
   const router = useRouter();
 
   const { username } = router.query;
-  // Handle checkbox change
   const handleNsfwBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNsfw(event.target.checked);
   };

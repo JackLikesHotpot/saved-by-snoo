@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/Index.module.css'; // Assuming the CSS is in the 'src/styles' directory
+import styles from '../styles/Index.module.css'; 
 import axios from 'axios'
 import Link from 'next/link';
 import { Noto_Sans } from 'next/font/google';
@@ -17,10 +17,8 @@ export default function Home() {
     const fetchAuthUrl = async () => {
       
       try {
-        const response = await axios.get('http://localhost:5000/api/auth_url'); // This fetches from your Flask API
-        setAuthUrl(response.data.auth_url); // Set the auth URL in the state
-        console.log('Fetched authUrl:', response.data.auth_url); // Add this line to check
-
+        const response = await axios.get('http://localhost:3001/api/auth/auth_url');
+        setAuthUrl(response.data.auth_url);
       } catch (error) {
         console.error('Error fetching auth URL:', error);
       }

@@ -1,4 +1,4 @@
-import '../styles/globals.css'; // Import your Tailwind CSS file
+import '../styles/globals.css';
 import { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {

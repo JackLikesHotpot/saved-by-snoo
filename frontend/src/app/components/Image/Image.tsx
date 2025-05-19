@@ -1,4 +1,4 @@
-// import styles from './Image.module.css'
+import styles from './Image.module.css'
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
