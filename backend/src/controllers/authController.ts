@@ -3,7 +3,7 @@ import snoowrap from 'snoowrap'
 
 export const getAuthUrl = (req: Request, res: Response) => {
 
-    const authUrl = snoowrap.getAuthUrl({
+  const authUrl = snoowrap.getAuthUrl({
     clientId: process.env.CLIENT_ID!,
     scope: ['identity', 'read', 'history'],
     redirectUri: process.env.REDIRECT_URI!,
@@ -31,11 +31,17 @@ export const authCallback = async (req: Request, res: Response): Promise<void> =
 
 
 const refreshToken = r.refreshToken
-  
-// store refresh token in database
-    await r.getMe().then(me => {
-      res.redirect(`http://localhost:3000/form?username=${me.name}`);
-    })
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 30 * 24 * 60 * 60 * 1000, 
+    path: '/', 
+  });
+
+  const me = await r.getMe().then(me => {
+    res.redirect(`http://localhost:3000/form?username=${me.name}`);
+  })
 
   } catch (err) {
   console.error('Auth error:', err);

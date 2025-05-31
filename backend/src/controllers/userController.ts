@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import snoowrap from 'snoowrap';
+import snoowrap, {Submission} from 'snoowrap';
 
 export const getProfile = (req: Request, res: Response) => {
   const username = req.session?.username;
@@ -11,19 +11,26 @@ export const getProfile = (req: Request, res: Response) => {
 }
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {  
-  
-  // get refresh token from db here
+  const refreshToken = req.cookies.refreshToken;
+  const nsfw = req.query.nsfw as string | undefined;
 
   try {
     const r = new snoowrap({
-      userAgent: 'your user agent',
+      userAgent: process.env.USER_AGENT!,
       clientId: process.env.CLIENT_ID!,
       clientSecret: process.env.CLIENT_SECRET!,
       refreshToken: refreshToken
     });
 
-    const savedItems = await r.getMe().getSavedContent({ limit: 50 });
-    res.json(savedItems);
+    const content = (await r.getMe().getSavedContent()).fetchAll()
+
+    // const filtered = content.filter(post => {
+    //     if (post instanceof Submission) {
+    //     return !post.over_18; 
+    //   }
+  
+    res.json(content);
+    
   } catch (err) {
     console.error('Error fetching saved images:', err);
     res.status(500).json({ message: 'Failed to fetch saved images' });
