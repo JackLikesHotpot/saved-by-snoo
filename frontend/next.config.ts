@@ -22,6 +22,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'external-preview.redd.it'
+      },
+      {
+        protocol: 'https',
+        hostname: 'v.redd.it'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.gyazo.com'
       }
     ]
   }

@@ -1,18 +1,10 @@
 import { Request, Response } from 'express'
-import snoowrap, {Submission} from 'snoowrap';
-
-export const getProfile = (req: Request, res: Response) => {
-  const username = req.session?.username;
-  if (!username) {
-    res.status(401).json({message: 'not authenticated'})
-  }
-
-  res.json({username})
-}
+import snoowrap, {Listing, Submission, Comment} from 'snoowrap';
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {  
   const refreshToken = req.cookies.refreshToken;
-  const nsfw = req.query.nsfw as string | undefined;
+  const includeNsfw = req.query.nsfw === 'true'
+  const includeGallery = req.query.gallery === 'true'
 
   try {
     const r = new snoowrap({
@@ -21,18 +13,35 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
       clientSecret: process.env.CLIENT_SECRET!,
       refreshToken: refreshToken
     });
-
-    const content = (await r.getMe().getSavedContent()).fetchAll()
-
-    // const filtered = content.filter(post => {
-    //     if (post instanceof Submission) {
-    //     return !post.over_18; 
-    //   }
   
-    res.json(content);
-    
+    const savedItems = await r.getMe().getSavedContent({ limit: 1000 });
+    const filteredByNsfw = filterNsfw(savedItems, includeNsfw)
+    const filteredByGallery = filterGallery(filteredByNsfw, includeGallery)
+
+    res.json(filteredByGallery);
   } catch (err) {
     console.error('Error fetching saved images:', err);
     res.status(500).json({ message: 'Failed to fetch saved images' });
   }
 };
+
+const filterNsfw = (items: Listing<Submission | Comment>, includeNsfw: boolean) => {
+  const filtered = items.filter(item => {
+    const isSubmission = 'over_18' in item;
+    if (item.name.startsWith('t3_') && isSubmission) {
+      return includeNsfw || !item.over_18;
+    }
+    return false
+  });
+
+  return filtered;
+}
+
+const filterGallery = (items: (Submission | Comment)[], includeGallery: boolean) => {
+  return items.filter(item => {
+    if ('is_gallery' in item) {
+      return !(item as any).is_gallery;
+    }
+    return true;
+  })
+}
