@@ -1,32 +1,12 @@
 /* Output.module.css */
 
-.grid-container {
-  @apply flex w-full
-}
-
-.grid-title {
-  @apply font-bold text-xl pb-4 pl-8
-}
-
 .images {
-  @apply grid grow 
-  grid-cols-1 
-  sm:grid-cols-2 
-  md:grid-cols-3 
-  lg:grid-cols-5 
-  xl:grid-cols-6 
-  2xl:grid-cols-8 
-  gap-4 items-center justify-items-center
-}
-
-.main {
-  @apply flex flex-col w-full
+  @apply columns-2 sm:columns-1 md:columns-2 lg:columns-3
 }
 
 .page-button {
   @apply p-2 bg-blue-500 text-white rounded
 }
-
 
 .controls {
   @apply flex justify-center items-center gap-4 mt-4 top-36 relative

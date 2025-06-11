@@ -10,6 +10,8 @@ interface Image {
   nsfw: boolean;
   index: number;
   type: string;
+  selftext: string;
+  author: string;
 }
 
 const useImages = (selectedSub: string | null, searchTitle: string, selectedType: string) => {

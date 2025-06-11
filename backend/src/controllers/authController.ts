@@ -39,11 +39,9 @@ const refreshToken = r.refreshToken
     path: '/', 
   });
 
-  const me = await r.getMe().then(me => {
-    res.redirect(`http://localhost:3000/form?username=${me.name}`);
-  })
-
-  } catch (err) {
+  res.redirect(`http://localhost:3000/output`);
+ } 
+ catch (err) {
   console.error('Auth error:', err);
   res.status(500).send(`Authentication failed: ${(err as Error).message || err}`);
 }
