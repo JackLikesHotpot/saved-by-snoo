@@ -16,9 +16,8 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
   
     const savedItems = await r.getMe().getSavedContent({ limit: 1000 });
     const filteredByNsfw = filterNsfw(savedItems, includeNsfw)
-    const filteredByGallery = filterGallery(filteredByNsfw, includeGallery)
 
-    res.json(filteredByGallery);
+    res.json(filteredByNsfw);
   } catch (err) {
     console.error('Error fetching saved images:', err);
     res.status(500).json({ message: 'Failed to fetch saved images' });
