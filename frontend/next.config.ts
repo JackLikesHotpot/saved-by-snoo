@@ -25,11 +25,19 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'v.redd.it'
+        hostname: 'i.gyazo.com'
       },
       {
         protocol: 'https',
-        hostname: 'i.gyazo.com'
+        hostname: 'x.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.reddit.com'
+      },      
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com'
       }
     ]
   }
