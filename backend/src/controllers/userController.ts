@@ -1,10 +1,19 @@
 import { Request, Response } from 'express'
 import snoowrap, {Listing, Submission, Comment} from 'snoowrap';
 
+interface Image {
+  url: string;
+  title: string;
+  subreddit: string;
+  index: number;
+  type: string;
+  selftext: string;
+  author: string;
+  nsfw: boolean;
+}
+
 export const getPosts = async (req: Request, res: Response): Promise<void> => {  
   const refreshToken = req.cookies.refreshToken;
-  const includeNsfw = req.query.nsfw === 'true'
-  const includeGallery = req.query.gallery === 'true'
 
   try {
     const r = new snoowrap({
@@ -15,32 +24,58 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
     });
   
     const savedItems = await r.getMe().getSavedContent({ limit: 1000 });
-    const filteredByNsfw = filterNsfw(savedItems, includeNsfw)
+    const cleanedItems = cleanData(savedItems)
 
-    res.json(filteredByNsfw);
+    res.json(cleanedItems);
   } catch (err) {
     console.error('Error fetching saved images:', err);
     res.status(500).json({ message: 'Failed to fetch saved images' });
   }
 };
 
-const filterNsfw = (items: Listing<Submission | Comment>, includeNsfw: boolean) => {
-  const filtered = items.filter(item => {
-    const isSubmission = 'over_18' in item;
-    if (item.name.startsWith('t3_') && isSubmission) {
-      return includeNsfw || !item.over_18;
-    }
-    return false
-  });
+const extractFirstImageUrl = (img: Submission): string | null => {
+  // 1. Try standard Reddit preview
+  const previewUrl = (img as any)?.preview?.images?.[0]?.source?.url;
+  if (previewUrl) return previewUrl;
 
-  return filtered;
-}
+  // 2. Try gallery image
+  const galleryData = (img as any).gallery_data;
+  const mediaMetadata = (img as any).media_metadata;
+  const firstMediaId = galleryData?.items?.[0]?.media_id;
+  const galleryImage = mediaMetadata?.[firstMediaId || ''];
 
-const filterGallery = (items: (Submission | Comment)[], includeGallery: boolean) => {
-  return items.filter(item => {
-    if ('is_gallery' in item) {
-      return !(item as any).is_gallery;
+  if (galleryImage?.s?.u && firstMediaId) {
+    return galleryImage.s.u.replace(/&amp;/g, '&');
+  }
+
+  return null;
+};
+
+const isSubmission = (item: any): item is Submission => {
+  return typeof item.title === 'string' && typeof item.url === 'string';
+};
+
+
+const cleanData = (items: Listing<Submission | Comment>) => {
+
+  const cleanedData: Image[] = [];
+
+  items.forEach((item, index) => {
+    if (isSubmission(item)) {
+      const imageUrl = extractFirstImageUrl(item) || item.url
+
+      cleanedData.push({
+        url: imageUrl,
+        title: item.title,
+        subreddit: item.subreddit_name_prefixed,
+        index,
+        type: item.post_hint,
+        selftext: item.selftext,
+        author: item.author.name,
+        nsfw: item.over_18
+      })
     }
-    return true;
   })
+
+  return cleanedData
 }
