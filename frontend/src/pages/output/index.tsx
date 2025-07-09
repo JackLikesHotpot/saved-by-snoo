@@ -20,7 +20,8 @@ const Output: React.FC = () => {
           <LoadingScreen />
         ) : (
           <div className='relative min-h-screen'>
-            <Header/>
+            <Header
+              length={images.length}/>
             <div className="px-4">
               <div className={styles['grid-container']}>  
                 <div className={styles['images']}>

@@ -1,20 +1,23 @@
 import styles from './Header.module.css'
-import { useSearchParams } from 'next/navigation';
-import Image from 'next/image'
-import Link from 'next/link'
-import arrow from '../../../../public/back-arrow.svg'
+import Image from 'next/image';
+import refresh from '../../../../public/refresh.svg'
+import settings from '../../../../public/settings.svg'
 
-const Header: React.FC = ({ }) => {
+interface HeaderProps {
+  length: number;
+}
 
-  const searchParams = useSearchParams();
-  const username = searchParams?.get('username')
+const Header: React.FC<HeaderProps> = ({ length }) => {
 
   return (
     <div className={styles['header']}>
-      <div className={styles['back-button']}>
-      <div><Link href={`../form?username=${username}`}><Image src={arrow} alt='back' width='25'></Image></Link></div></div>
-      <div className={styles['project-name']}><Link href={'/'}>Saved By Snoo</Link></div>
-      <div className={styles['username']}><Link href={`https://reddit.com/user/${username}`} target='_blank'>{username}</Link></div>
+      <div className={styles['options']}>
+        <input type="text" className={styles['search']} placeholder={`Search ${length} saved posts`}/>
+        <div className={styles['header-buttons']}>
+          <button className={styles['button']} aria-label='Refresh'><Image src={refresh} alt='refresh icon'/></button>
+          <button className={styles['button']} aria-label='Settings'><Image src={settings} alt='settings icon'/></button>
+        </div>
+      </div>
     </div>
   );
 };

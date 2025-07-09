@@ -1,15 +1,19 @@
 .header {
-  @apply flex flex-row py-2 font-semibold border-b-4 mb-8 bg-gray-200;
+  @apply flex flex-row py-2 font-semibold border-b-4 mb-8 justify-center items-center;
 }
 
-.back-button {
-  @apply w-1/3 flex justify-start
+.options {
+  @apply w-3/4 flex
 }
 
-.project-name {
-  @apply w-1/3 flex justify-center text-xl
+.search {
+  @apply flex bg-gray-200 rounded-lg pl-4 h-10 w-4/5 outline-none lg:ml-4 xl:ml-8 2xl:ml-14
 }
 
-.username {
-  @apply w-1/3 flex justify-end pr-10 align-middle
+.header-buttons {
+  @apply flex flex-row mx-2
+}
+
+.button {
+  @apply w-8 m-1 mx-2
 }
