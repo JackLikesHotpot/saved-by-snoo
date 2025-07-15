@@ -11,44 +11,47 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
+import { textWithLink } from '@/app/helpers/textWithLink';
 
 type ImageAttributes = {
-  url: string;
+  preview_url: string;
+  post_url: string;
   subreddit: string;
   title: string;
   nsfw: boolean;
   description: string;
-  author: string;
 }
 
-const ImageCard: React.FC<ImageAttributes> = ({url, subreddit, title, nsfw, description, author}) => {
+const ImageCard: React.FC<ImageAttributes> = ({preview_url, post_url, subreddit, title, nsfw, description}) => {
 
   const nsfw_blur = true;
   return (
     <Card className="break-inside-avoid overflow-hidden mb-2">
       <CardHeader>
-        <p className='text-xs'>{`r/${subreddit}`}</p>
-        <p className='text-xs'>{`${author}`}</p>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{markdownToReadable(description)}</CardDescription>
+        <a className='text-xs mb-1' href={`https://reddit.com/${post_url}`} target='_blank'>{`/${subreddit}`}</a>
+        <CardTitle><a href={`https://reddit.com/${post_url}`} target='_blank'>{title}</a></CardTitle>
+        <CardDescription>{textWithLink(markdownToReadable(description))}</CardDescription>
       </CardHeader>
       <CardContent>
+      <a href={preview_url} target='_blank'>
         <Image
           className={
             nsfw_blur && nsfw
               ? "filter blur-md hover:blur-none transition duration-300 object-contain"
               : "drop-shadow-lg object-contain"
           }
-          src={url}
+          src={preview_url}
           width={365}
           height={0}
           style={{height: 'auto'}}
-          alt={`Image for ${title}`}
-        />
+          alt={`Image for ${title}`}>
+        </Image>
+        </a>
       </CardContent>
-      <CardFooter>
+      {/* <CardFooter>
         <p>Card Footer</p>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

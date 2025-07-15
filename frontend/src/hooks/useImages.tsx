@@ -27,7 +27,8 @@ interface ImageData extends Image {
 }
 
 interface Image {
-  url: string;
+  preview_url: string;
+  post_url: string;
   subreddit: string;
   title: string;
   index: number;

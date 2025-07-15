@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import snoowrap, {Listing, Submission, Comment} from 'snoowrap';
 
 interface Image {
-  url: string;
+  preview_url: string;
+  post_url: string;
   title: string;
   subreddit: string;
   index: number;
@@ -65,7 +66,8 @@ const cleanData = (items: Listing<Submission | Comment>) => {
       const imageUrl = extractFirstImageUrl(item) || item.url
 
       cleanedData.push({
-        url: imageUrl,
+        preview_url: imageUrl,
+        post_url: item.permalink,
         title: item.title,
         subreddit: item.subreddit_name_prefixed,
         index,
