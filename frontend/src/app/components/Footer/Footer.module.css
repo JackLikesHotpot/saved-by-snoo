@@ -1,7 +1,0 @@
-.footer {
-  @apply flex fixed bottom-0 w-full p-4 bg-blue-400 text-white font-semibold
-}
-
-.home, .source, .contact {
-  @apply text-center px-3
-}
