@@ -2,6 +2,7 @@ import styles from "./ImageCard.module.css";
 
 import { useEffect, useState } from "react";
 import { markdownToReadable } from "@/app/helpers/markdownToReadable";
+import { getRedditTimeAgo } from "@/app/helpers/getRedditTimeAgo";
 import Image from "next/image";
 import {
   Card,
@@ -21,37 +22,40 @@ type ImageAttributes = {
   title: string;
   nsfw: boolean;
   description: string;
+  date_created: number;
 }
 
-const ImageCard: React.FC<ImageAttributes> = ({preview_url, post_url, subreddit, title, nsfw, description}) => {
+const ImageCard: React.FC<ImageAttributes> = ({preview_url, post_url, subreddit, title, nsfw, description, date_created}) => {
 
   const nsfw_blur = true;
   return (
-    <Card className="break-inside-avoid overflow-hidden mb-2">
-      <CardHeader>
-        <a className='text-xs mb-1' href={`https://reddit.com/${post_url}`} target='_blank'>{`/${subreddit}`}</a>
-        <CardTitle><a href={`https://reddit.com/${post_url}`} target='_blank'>{title}</a></CardTitle>
-        <CardDescription>{textWithLink(markdownToReadable(description))}</CardDescription>
-      </CardHeader>
+    <Card className="overflow-hidden">
       <CardContent>
-      <a href={preview_url} target='_blank'>
+      <a href={preview_url} target='_blank' className="block relative w-full aspect-[3/4]">
         <Image
-          className={
-            nsfw_blur && nsfw
-              ? "filter blur-md hover:blur-none transition duration-300 object-contain"
-              : "drop-shadow-lg object-contain"
-          }
+          className={`object-cover ${nsfw_blur && nsfw ? "blur-md hover:blur-none transition duration-300" : ""}`}
           src={preview_url}
-          width={365}
-          height={0}
-          style={{height: 'auto'}}
-          alt={`Image for ${title}`}>
-        </Image>
-        </a>
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          alt={`Image for ${title}`}
+        />
+      </a>
       </CardContent>
-      {/* <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter> */}
+      <CardHeader>
+        <div className='post-details'>
+          <a className='text-xs mb-1' href={`https://reddit.com/${post_url}`} target='_blank'>{`/${subreddit}`}{`       ${getRedditTimeAgo(date_created)}`}</a>
+        </div>
+        <CardTitle><a href={`https://reddit.com/${post_url}`} target='_blank'>{title}</a></CardTitle>
+      </CardHeader>
+        <CardDescription className="line-clamp-6">{textWithLink(markdownToReadable(description))}
+        </CardDescription>
+      <CardFooter className="border-t border-gray-200 my-4">
+        <div className='buttons flex gap-4 justify-between w-3/4 mx-8 pt-4'>
+          <div className={styles['button']}>Open</div>
+          <div className={styles['button']}>Share</div>
+          <div className={styles['button']}>Unsave</div>
+        </div>
+      </CardFooter>
     </Card>
   );
 };

@@ -36,6 +36,7 @@ interface Image {
   selftext: string;
   author: string;
   nsfw: boolean;
+  date_created: number;
 }
 
 

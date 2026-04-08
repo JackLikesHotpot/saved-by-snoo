@@ -11,10 +11,15 @@ interface Image {
   selftext: string;
   author: string;
   nsfw: boolean;
+  date_created: number; 
 }
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {  
   const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    res.status(401).json({ message: 'Not authenticated. Please log in first.' });
+    return;
+  }
 
   try {
     const r = new snoowrap({
@@ -24,7 +29,7 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
       refreshToken: refreshToken
     });
   
-    const savedItems = await r.getMe().getSavedContent({ limit: 1000 });
+    const savedItems = await r.getMe().getSavedContent({ limit: 200 });
     const cleanedItems = cleanData(savedItems)
 
     res.json(cleanedItems);
@@ -74,7 +79,8 @@ const cleanData = (items: Listing<Submission | Comment>) => {
         type: item.post_hint,
         selftext: item.selftext,
         author: item.author.name,
-        nsfw: item.over_18
+        nsfw: item.over_18,
+        date_created: item.created
       })
     }
   })

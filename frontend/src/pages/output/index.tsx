@@ -44,6 +44,7 @@ const Output: React.FC = () => {
                       title={item.title}
                       nsfw={item.nsfw}
                       description={item.selftext}
+                      date_created={item.date_created}
                     />
                   ))}
                 </div>

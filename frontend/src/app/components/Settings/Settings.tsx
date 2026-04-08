@@ -11,15 +11,8 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ onClose, onSettingsClick }) => {
 
 return (
-    <div
-      className="fixed inset-0 bg-white z-50"
-      onClick={onClose}>
-      <button 
-        className='w-8 m-1 mx-2 self-start' 
-        aria-label='Settings'
-        onClick={onSettingsClick}>
-        <Image src={settings} alt='settings icon'/>
-      </button>
+    <div>
+    
     </div>
   );
 }
