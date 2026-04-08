@@ -5,8 +5,6 @@ This web application was created using React and Next.js as frameworks, with an 
 ## Features:
 - [x] Allows users to view their save images and videos
 - [x] Allows users to filter their images/videos by types (gallery, video, image)
-- [x] Allows users to view NSFW posts
-- [x] Allows users to blur NSFW posts if viewing them
 - [x] Responsive design for different devices
 - [ ] Log out button
 - [ ] Add 'sort' functions on page so users can sort by score, time or title.
