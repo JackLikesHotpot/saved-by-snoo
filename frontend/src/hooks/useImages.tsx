@@ -79,7 +79,7 @@ const useImages = () => {
   fetchData();
   }, [nsfw]);
 
-  return { images, loading };
+  return { images, setImages, loading };
 }
 
 export default useImages;

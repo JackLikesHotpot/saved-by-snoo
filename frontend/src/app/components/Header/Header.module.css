@@ -3,17 +3,19 @@
 }
 
 .options {
-  @apply w-3/4 flex
+  @apply w-3/4 flex items-center;
 }
 
 .search {
-  @apply flex bg-gray-200 rounded-lg pl-4 h-10 w-4/5 outline-none lg:ml-4 xl:ml-8 2xl:ml-14
+  @apply flex-1 bg-white border-[1.5px] border-gray-200 rounded-xl pl-4 h-10 outline-none
+         lg:ml-4 xl:ml-8 2xl:ml-14 focus:border-gray-400 transition-colors;
 }
 
 .header-buttons {
-  @apply flex flex-row mx-2
+  @apply flex flex-row mx-2;
 }
 
 .button {
-  @apply w-8 m-1 mx-2
+  @apply w-9 h-9 mx-1 rounded-lg border-[1.5px] border-gray-200 bg-white
+         flex items-center justify-center hover:border-gray-400 hover:bg-gray-100 transition-all;
 }

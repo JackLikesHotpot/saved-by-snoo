@@ -33,7 +33,7 @@ export default function Home() {
         <div className={styles['panel']}></div>
         <div className={styles['body']}>
           <div className={`${styles['heading']} ${notoSans.className}`}>
-            <span>Saved by Snoo</span>
+            <span>Saved by Snoo<span className="text-[#FF4500]">.</span></span>
           </div>
             <div className={styles['description']}>
               <ul className={styles['subheading']}>

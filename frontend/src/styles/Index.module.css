@@ -1,33 +1,33 @@
-/* Index.module.css */
-
 .landing {
-  @apply h-screen flex
-}
-
-.heading {
-  @apply flex justify-center text-6xl pb-36
+  @apply h-screen flex items-stretch bg-gray-50
 }
 
 .body {
-  @apply flex flex-col items-center justify-center h-screen w-full
+  @apply flex flex-col items-center justify-center h-full w-full
 }
 
-.subheading {
-  @apply font-bold text-xl w-1/2
-}
-
-.button {
-  @apply  bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-4 border border-blue-700 rounded
+.heading {
+  @apply flex justify-center text-6xl pb-12 font-bold tracking-tight text-gray-900
 }
 
 .description {
-  @apply flex flex-row justify-center items-center w-full text-center
+  @apply flex flex-row justify-center items-center w-full text-center gap-8
 }
 
-.panel {
-  @apply w-1/4
+.subheading {
+  @apply text-gray-500 text-base list-none flex flex-col gap-2 text-left
 }
 
 .login {
-  @apply w-1/2 
+  @apply flex justify-center items-center
+}
+
+.button {
+  @apply bg-[#FF4500] hover:bg-[#e03d00] transition duration-200 text-white 
+         font-semibold py-3 px-8 rounded-xl shadow-sm hover:shadow-md
+         border-0 text-sm tracking-wide
+}
+
+.panel {
+  @apply w-1/4 bg-gray-50
 }
